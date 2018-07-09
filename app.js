@@ -193,11 +193,9 @@ app.post('/message', function (req, res) {
                         "label": "연성대학교 홈페이지 링크",
                         "url": ys_homepage
                     },
-                    "keyboard": {
+                    keyboard: {
                         "type": "buttons",
-                        "buttons": [
-                            "연성대학교위치"
-                        ]
+                        "buttons": ['연성대학교위치']
                     }
                 }
             }

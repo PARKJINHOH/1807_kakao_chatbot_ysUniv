@@ -17,3 +17,8 @@ Language : Node.js v8.11.3 , npm v5.6.0 <br>
 ## 개발 NOTE
 ### 코드 관리 <br>
 노트북 코드 입력  Github 업로드  AWS(putty)에서 clone
+
+### 일지
+2018.07.05 : 프로젝트 시작, 카카오플러스 연동 작업
+2018.07.09 : github 연동 작업
+

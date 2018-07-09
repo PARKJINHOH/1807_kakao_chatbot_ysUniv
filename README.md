@@ -15,5 +15,5 @@ Language : Node.js v8.11.3 , npm v5.6.0 <br>
 2018/07/05 ~
 
 ## 개발 NOTE
-<h5>코드 관리</h5> <br>
+### 코드 관리 <br>
 노트북 코드 입력  Github 업로드  AWS(putty)에서 clone

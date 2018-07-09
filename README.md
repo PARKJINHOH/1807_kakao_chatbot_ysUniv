@@ -12,15 +12,8 @@ IDE : Putty <br>
 Language : Node.js v8.11.3 , npm v5.6.0 <br>
 
 ## 개발 일정
-2018/07/05 ~ 
+2018/07/05 ~
 
-
-
-
-
-
-
-
-
-
-
+## 개발 NOTE
+<h5>코드 관리</h5> <br>
+노트북 코드 입력  Github 업로드  AWS(putty)에서 clone

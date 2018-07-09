@@ -156,7 +156,7 @@ app.post('/message', function (req, res) {
         case '성적':
             send = {
                 'message': {
-                    'text': '성적 , 성적분포, 성적 정리표 \n 성적은 학점과 점수가 있으며 학점은 4.5만점, 점수는 100점 만점 입니다. 성적 분포는 A는 최대 30%를 교수님이 줄 수 있습니다. \n 점수 100~95, [학점 4.5 , 등급 A+] \n 점수 94~90, [학점 4.0 , 등급 A0] \n 점수 89~85, [학점 3.5 , 등급 B+] \n 점수 84~80, [학점 3.0 , 등급 B0] \n 점수 84~80, [학점 3.0 , 등급 B0] \n 점수 79~76, [학점 2.5 , 등급 C+] \n 점수75~70, [학점 2.0 , 등급 C0] \n 점수 69~65, [학점 1.5 , 등급 D+] \n 점수 64~60, [학점 1.0 , 등급 D0] \n 점수59~, [학점 -  , 등급 F] \n \n 순위는 따로 통합정보시스템에 없으며, 학과사무실에 전화를 해야만 알 수 있습니다.'
+                    'text': '성적 , 성적분포, 성적 정리표 \n 성적은 학점과 점수가 있으며 학점은 4.5만점, 점수는 100점 만점 입니다. 성적 분포는 A는 최대 30%를 교수님이 줄 수 있습니다. \n   점수     학점   등급 \n100~95     4.5     A+ \n94~90      4.0     A0 \n89~85      3.5     B+\n84~80      3.0     B0\n84~80      3.0     B0\n79~76      2.5     C+\n75~70      2.0     C0\n69~65      1.5     D+\n64~60      1.0     D0\n59~           -       F\n \n 순위는 따로 통합정보시스템에 없으며, 학과사무실에 전화를 해야만 알 수 있습니다.'
                 }
             }
             break;
@@ -164,17 +164,29 @@ app.post('/message', function (req, res) {
         case '대학교':
         case '연성대학교':
             send = {
-                'message': {
-                    'text': '연성대학교 홈페이지 링크 입니다.'
-                },
-                "photo": {
-                    "url": "http://www.yeonsung.ac.kr/ajax/CMN_SVC/FileView.do?GBN=X01&SITE_GROUP_NO=2&SITE_NO=2",
-                    "width": 640,
-                    "height": 480
-                },
-                "message_button": {
-                    "label": "연성대학교 홈페이지",
-                    "url": "http://www.yeonsung.ac.kr"
+                "message": {
+                    "text": "연성대학교 입니다.",
+                    "message_button": {
+                        "label": "연성대학교 홈페이지 링크",
+                        "url": "http://www.yeonsung.ac.kr"
+                    },
+                    "keyboard": {
+                        "type": "buttons",
+                        "buttons": [
+                            "연성대학교위치"
+                        ]
+                    }
+                }
+            }
+            break;
+        case '연성대학교위치':
+            send = {
+                "message": {
+                    "text": " 연락처 : 031-441-1100 \n 위치 : 경기도 안양시 만안구 안양3동 양화로37번길 34",
+                    "message_button": {
+                        "label": "연성대학교 주소 위치",
+                        "url": "https://www.google.co.kr/maps/@37.3961263,126.9072016,15.08z"
+                    }
                 }
             }
             break;

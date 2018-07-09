@@ -6,6 +6,17 @@ var logger = require('morgan');
 var app = express();
 
 
+
+//url 모음
+var ys_homepage = 'http://www.yeonsung.ac.kr';
+var ys_location = 'https://www.google.co.kr/maps/place/%EC%97%B0%EC%84%B1%EB%8C%80%ED%95%99%EA%B5%90/@37.3964417,126.9048964,15.17z/data=!4m5!3m4!1s0x0:0x90333c28b83c0e84!8m2!3d37.396555!4d126.9077861';
+var ys_scholarship = 'http://www.yeonsung.ac.kr/ko/cms/FR_CON/index.do?MENU_ID=650';
+var ys_mileage = 'http://www.yeonsung.ac.kr/ko/cms/FR_CON/index.do?MENU_ID=930';
+var kosaf = 'http://hope.kosaf.go.kr';
+
+
+
+
 //추가 시작
 var http = require('http');
 var bodyParser = require('body-parser');
@@ -100,6 +111,10 @@ app.post('/message', function (req, res) {
                 keyboard: {
                     'type': 'buttons',
                     'buttons': ['1유형', '2유형']
+                },
+                "message_button": {
+                    "label": "국가장학금 홈페이지",
+                    "url": kosaf
                 }
             }
             break;
@@ -128,6 +143,10 @@ app.post('/message', function (req, res) {
                 keyboard: {
                     'type': 'buttons',
                     'buttons': ['장학금 지급 순서', '성적 장학금', 'gem 마일리지']
+                },
+                "message_button": {
+                    "label": "교내, 교외 장학금 종류",
+                    "url": ys_scholarship
                 }
             }
             break;
@@ -149,6 +168,10 @@ app.post('/message', function (req, res) {
             send = {
                 'message': {
                     'text': ''
+                },
+                "message_button": {
+                    "label": "커리어&Gem마일리지 안내표",
+                    "url": ys_mileage
                 }
             }
             break;
@@ -165,10 +188,10 @@ app.post('/message', function (req, res) {
         case '연성대학교':
             send = {
                 "message": {
-                    "text": "연성대학교 입니다.",
+                    "text": " 안녕하세요. 연성대학교 입니다. \n 연락처 : 031-441-1100",
                     "message_button": {
                         "label": "연성대학교 홈페이지 링크",
-                        "url": "http://www.yeonsung.ac.kr"
+                        "url": ys_homepage
                     },
                     "keyboard": {
                         "type": "buttons",
@@ -182,10 +205,10 @@ app.post('/message', function (req, res) {
         case '연성대학교위치':
             send = {
                 "message": {
-                    "text": " 연락처 : 031-441-1100 \n 위치 : 경기도 안양시 만안구 안양3동 양화로37번길 34",
+                    "text": "위치 : 경기도 안양시 만안구 안양3동 양화로37번길 34",
                     "message_button": {
                         "label": "연성대학교 주소 위치",
-                        "url": "https://www.google.co.kr/maps/@37.3961263,126.9072016,15.08z"
+                        "url": ys_location
                     }
                 }
             }

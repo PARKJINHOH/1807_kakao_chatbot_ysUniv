@@ -187,16 +187,16 @@ app.post('/message', function (req, res) {
         case '대학교':
         case '연성대학교':
             send = {
-                "message": {
-                    "text": " 안녕하세요. 연성대학교 입니다. \n 연락처 : 031-441-1100",
-                    keyboard: {
-                        "type": "buttons",
-                        "buttons": ['연성대학교위치']
-                    },
-                    "message_button": {
-                        "label": "연성대학교 홈페이지 링크",
-                        "url": ys_homepage
-                    }
+                'message': {
+                    'text': '안녕하세요. 연성대학교 입니다. \n 연락처 : 031-441-1100'
+                },
+                keyboard: {
+                    'type': 'buttons',
+                    'buttons': ['연성대학교위치']
+                },
+                "message_button": {
+                    "label": "연성대학교 홈페이지 링크",
+                    "url": ys_homepage
                 }
             }
             break;

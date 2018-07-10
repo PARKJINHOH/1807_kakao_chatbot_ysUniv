@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var app = express();
 
-
+var wether = require("/User_Moudule/WetherMoudule.js");
 
 //url 모음
 var ys_homepage = 'http://www.yeonsung.ac.kr';

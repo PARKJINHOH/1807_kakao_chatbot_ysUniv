@@ -5,7 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var app = express();
 
-var wether = require("/User_Moudule/WetherMoudule.js");
+//사용자모듈
+var wethermoudule = require("/User_Moudule/WetherMoudule.js");
 
 //url 모음
 var ys_homepage = 'http://www.yeonsung.ac.kr';
@@ -210,6 +211,16 @@ app.post('/message', function (req, res) {
                     }
                 }
             }
+            break;
+        case '날씨':
+            wethermoudule.wether().then(function (resultbody) {
+                send = {
+                    "message": {
+                        "text": "연성대학교 현재 날씨 정보 입니다. \n 온도 : " + resultbody;
+                    }
+                }
+            });
+
             break;
 
         default:

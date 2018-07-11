@@ -5,8 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var app = express();
 
-//사용자모듈
-var wethermoudule = require("./User_Moudule/WetherMoudule.js");
 
 //url 모음
 var ys_homepage = 'http://www.yeonsung.ac.kr';
@@ -14,6 +12,7 @@ var ys_location = 'https://www.google.co.kr/maps/place/%EC%97%B0%EC%84%B1%EB%8C%
 var ys_scholarship = 'http://www.yeonsung.ac.kr/ko/cms/FR_CON/index.do?MENU_ID=650';
 var ys_mileage = 'http://www.yeonsung.ac.kr/ko/cms/FR_CON/index.do?MENU_ID=930';
 var kosaf = 'http://hope.kosaf.go.kr';
+var Univstudy = 'http://www.yeonsung.ac.kr/ko/cms/FR_CON/index.do?MENU_ID=1450';
 
 
 
@@ -99,7 +98,7 @@ app.post('/message', function (req, res) {
             send = {
                 'message': {
                     'text': '********명령어******** \n ● 국가장학금, 장학금 \n ● f학점 , 성적 \n ● 현장실습, 방학 현장실습, 학기제 현장실습 \n ● 재수강 \n ● 학식, 급식 \n ● 대학교, 연성대학교 \n' +
-                        '업데이트 날짜 : 2018 / 07 / 09 by 연성대 컴퓨터 소프트웨어_PJH'
+                        '업데이트 날짜 : 2018 / 07 / 11 by 연성대 컴퓨터 소프트웨어_PJH'
                 }
             }
             break;
@@ -201,6 +200,7 @@ app.post('/message', function (req, res) {
                 }
             }
             break;
+
         case '연성대학교위치':
             send = {
                 "message": {
@@ -212,15 +212,42 @@ app.post('/message', function (req, res) {
                 }
             }
             break;
-        case '날씨':
-            wethermoudule.wether().then(function (resultbody) {
-                send = {
-                    "message": {
-                        "text": "연성대학교 현재 날씨 정보 입니다. \n 온도 : " + resultbody
-                    }
+        case '현장실습':
+            send = {
+                'message': {
+                    'text': '방학 현장실습, 학기제 현장실습이 있습니다. \n 현장실습을 하지 못할경우 졸업을 할 수 없습니다.'
+                },
+                keyboard: {
+                    'type': 'buttons',
+                    'buttons': ['방학 현장실습','학기제 현장실습']
+                },
+                "message_button": {
+                    "label": "연성대학교 홈페이지 링크",
+                    "url": ys_homepage
                 }
-            });
-
+            }
+            break;
+        case '방학현장실습':
+            send = {
+                'message': {
+                    'text': '하계방학 및 동계방학에 이루어지는 현장실습이며, 동계에 현장실습을 할 경우 졸업이전 최종서류를 작성, 제출해야 하기 때문에 기말고사 종료후 바로 해야 합니다. \n이수시간 : 1일 8시간 이내로 인정하며, 총 4주(160시간) 이상을 원칙으로 합니다.\n 급여 : 업체가 주는 급여는 최소 20만원입니다. \n 자세한건 학과 사무실에 물어보세요.'
+                },
+                "message_button": {
+                    "label": "연성대학교 학과별 홈페이지",
+                    "url": Univstudy
+                }
+            }
+            break;
+        case '학기제현장실습':
+            send = {
+                'message': {
+                    'text': '졸업학년도 재학생으로 2학기 등록을 한 학생중 개강 후 학기중에 현장실습을 가는것을 말합니다. \n이수시간 : 1일 8시간, 주 40시간을 기준으로 연속적으로 15주간 실시 이상을 원칙으로 합니다. \n 급여 : 업체가 주는 급여는 최소 20만원입니다. \n 자세한건 학과 사무실에 물어보세요.'
+                },
+                "message_button": {
+                    "label": "연성대학교 학과별 홈페이지",
+                    "url": Univstudy
+                }
+            }
             break;
 
         default:
@@ -255,4 +282,6 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
+
 module.exports = app;
+//끝

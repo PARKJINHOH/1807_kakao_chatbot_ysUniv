@@ -253,7 +253,7 @@ app.post('/message', function (req, res) {
         case '날씨':
             send = {
                 'message': {
-                    'text': 'testa : ' + testa;
+                    'text': 'testa : ' + testa
                 }
             }
             break;

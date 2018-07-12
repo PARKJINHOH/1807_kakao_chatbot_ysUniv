@@ -25,6 +25,7 @@ module.exports.weather = function (callback) {
     /*시간 데이터값*/
     var hour = today.getHours();
     hour = hour - 1;
+    console.log('hour : ' + hour);
     var min = today.getMinutes();
     if (hour < 10) {
         hour = "0" + hour;
@@ -44,7 +45,7 @@ module.exports.weather = function (callback) {
     }
 
     var todaytime = hour + min;
-    console.log('todaytime' + todaytime);
+    console.log('todaytime : ' + todaytime);
 
     /*위치 데이터값*/
     var nx = '59';

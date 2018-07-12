@@ -57,6 +57,7 @@ app.use(bodyParser.json());
 app.get('/keyboard', function (req, res) {
     weathermoudule.weather(function (result) {
         weatherTem = result;
+        console.log("result : " + result);
     })
     //전달할 데이터
     var data = {
@@ -259,7 +260,7 @@ app.post('/message', function (req, res) {
         case '날씨':
             send = {
                 'message': {
-                    'text': 'testa : ' + weatherTem;
+                    'text': '현재 온도 : ' + weatherTem
                 }
             }
             break;

@@ -4,10 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var app = express();
-var weatherTem;
+
 //모듈
 var weathermoudule = require("./User_Moudule/WetherMoudule.js");
-
+var weatherTem; // 온도 변수
 
 
 //url 모음
@@ -56,8 +56,10 @@ app.use(bodyParser.json());
 //http://서버주소/keyboard
 app.get('/keyboard', function (req, res) {
     weathermoudule.weather(function (result) {
-        weatherTem = result;
-        console.log("result : " + result);
+        weatherTem = result[0];
+        console.log("result[0] : " + result[0]);
+        console.log("result[1] : " + result[1]);
+        console.log("result[2] : " + result[2]);
     })
     //전달할 데이터
     var data = {
@@ -200,7 +202,7 @@ app.post('/message', function (req, res) {
                 },
                 keyboard: {
                     'type': 'buttons',
-                    'buttons': ['연성대학교위치']
+                    'buttons': ['연성대학교위치', '연성대날씨']
                 },
                 "message_button": {
                     "label": "연성대학교 홈페이지 링크",
@@ -257,10 +259,11 @@ app.post('/message', function (req, res) {
                 }
             }
             break;
+        case '연성대날씨':
         case '날씨':
             send = {
                 'message': {
-                    'text': '현재 온도 : ' + weatherTem
+                    'text': '연성대학교 현재 온도 : ' + weatherTem +'℃ 입니다. \n 최저 최고'
                 }
             }
             break;

@@ -56,10 +56,8 @@ app.use(bodyParser.json());
 //http://서버주소/keyboard
 app.get('/keyboard', function (req, res) {
     weathermoudule.weather(function (result) {
-        weatherTem = result[0];
-        console.log("result[0] : " + result[0]);
-        console.log("result[1] : " + result[1]);
-        console.log("result[2] : " + result[2]);
+        weatherTem = result;
+        console.log("weatherTem : " + weatherTem);
     })
     //전달할 데이터
     var data = {

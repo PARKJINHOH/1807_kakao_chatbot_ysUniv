@@ -92,6 +92,7 @@ app.post('/message', function (req, res) {
     console.log('전달받은 메시지 : ' + msg);
 
     var send = {}; //응답할 데이터
+    var testa = '1';
 
     switch (trimstring) {
         case '도움말':
@@ -219,7 +220,7 @@ app.post('/message', function (req, res) {
                 },
                 keyboard: {
                     'type': 'buttons',
-                    'buttons': ['방학 현장실습','학기제 현장실습']
+                    'buttons': ['방학 현장실습', '학기제 현장실습']
                 },
                 "message_button": {
                     "label": "연성대학교 홈페이지 링크",
@@ -246,6 +247,13 @@ app.post('/message', function (req, res) {
                 "message_button": {
                     "label": "연성대학교 학과별 홈페이지",
                     "url": Univstudy
+                }
+            }
+            break;
+        case '날씨':
+            send = {
+                'message': {
+                    'text': 'testa : ' + testa;
                 }
             }
             break;

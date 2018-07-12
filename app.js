@@ -4,6 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var app = express();
+var weatherTem;
+//모듈
+var weathermoudule = require("./User_Moudule/WetherMoudule.js");
+
 
 
 //url 모음
@@ -51,6 +55,9 @@ app.use(bodyParser.json());
 
 //http://서버주소/keyboard
 app.get('/keyboard', function (req, res) {
+    weathermoudule.weather(function (result) {
+        weatherTem = result;
+    })
     //전달할 데이터
     var data = {
         'type': 'buttons',
@@ -92,7 +99,6 @@ app.post('/message', function (req, res) {
     console.log('전달받은 메시지 : ' + msg);
 
     var send = {}; //응답할 데이터
-    var testa = '1';
 
     switch (trimstring) {
         case '도움말':
@@ -253,7 +259,7 @@ app.post('/message', function (req, res) {
         case '날씨':
             send = {
                 'message': {
-                    'text': 'testa : ' + testa
+                    'text': 'testa : ' + weatherTem;
                 }
             }
             break;

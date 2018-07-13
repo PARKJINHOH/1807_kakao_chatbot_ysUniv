@@ -5,6 +5,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var app = express();
 
+//모듈
+var weathermoudule = require("./User_Moudule/WetherMoudule.js");
+var weatherTem; // 온도 변수
+var weatherResult; // 습도, 기온 등
+
 
 //url 모음
 var ys_homepage = 'http://www.yeonsung.ac.kr';
@@ -51,6 +56,14 @@ app.use(bodyParser.json());
 
 //http://서버주소/keyboard
 app.get('/keyboard', function (req, res) {
+    weathermoudule.weather(function (result) {
+        weatherTem = result;
+        console.log("----현재온도----\n" + weatherTem);
+    });
+    weathermoudule.tem(function (result) {
+        weatherResult = result;
+        console.log("----현재기상----\n" + weatherResult);
+    });
     //전달할 데이터
     var data = {
         'type': 'buttons',
@@ -64,6 +77,14 @@ app.get('/keyboard', function (req, res) {
 
 //http://서버주소/message
 app.post('/message', function (req, res) {
+    weathermoudule.weather(function (result) {
+        weatherTem = result;
+        console.log("----현재온도----\n" + weatherTem);
+    });
+    weathermoudule.tem(function (result) {
+        weatherResult = result;
+        console.log("----현재기상----\n" + weatherResult);
+    });
     //string = 입력받은 카카오톡 문자
     var string = req.body.content;
 
@@ -97,11 +118,12 @@ app.post('/message', function (req, res) {
         case '도움말':
             send = {
                 'message': {
-                    'text': '********명령어******** \n ● 국가장학금, 장학금 \n ● f학점 , 성적 \n ● 현장실습, 방학 현장실습, 학기제 현장실습 \n ● 재수강 \n ● 학식, 급식 \n ● 대학교, 연성대학교 \n' +
-                        '업데이트 날짜 : 2018 / 07 / 11 by 연성대 컴퓨터 소프트웨어_PJH'
+                    'text': '********명령어******** \n ⊙ 국가장학금, 장학금 \n ⊙ f학점 , 성적 \n ⊙ 현장실습, 방학 현장실습, 학기제 현장실습 \n ⊙ 재수강 \n ⊙ 학식, 급식 \n ⊙ 대학교, 연성대학교 \n' +
+                        '업데이트 : 2018/07/13\nby연성대 컴퓨터 소프트웨어_PJH'
                 }
             }
             break;
+
             // 국가장학금, 1유형, 2유형, 장학금, 성적장학금, gem마일리지, f학점
         case '국가장학금':
             send = {
@@ -120,6 +142,7 @@ app.post('/message', function (req, res) {
             break;
 
         case '1유형':
+        case '국가장학금1유형':
             send = {
                 'message': {
                     'text': '국가 장학금 1유형 \n 매년 2회 실시를 하며 신청일정에 신청을 꼭 해야 합니다. 장학금 금액은 가구소득분위에 따라서 장학금을 차등 지급 합니다. 올해년도 신청일자는 ~ 입니다.'
@@ -128,6 +151,7 @@ app.post('/message', function (req, res) {
             break;
 
         case '2유형':
+        case '국가장학금2유형':
             send = {
                 'message': {
                     'text': '2유형 장학금은 대학교에서 주는 장학금으로 1유형 장학금을 받은 학생중에서 선발이 됩니다. 1유형을 받았어도 선택이 안될 수 있으니 심사를 기다려 보세요. \n 만약 1유형+2유형이 한학기 등록금을 초과할 경우 초과분은 미지급되며, 이후 학교에서의 성적장학금, 복지장학금등 기타 장학금은 받을 수 없습니다.. 자세한건 [장학금 지급 순서]로 검색해 보세요.'
@@ -150,6 +174,7 @@ app.post('/message', function (req, res) {
                 }
             }
             break;
+
         case '장학금지급순서':
             send = {
                 'message': {
@@ -157,6 +182,7 @@ app.post('/message', function (req, res) {
                 }
             }
             break;
+
         case '성적장학금':
             send = {
                 'message': {
@@ -164,6 +190,7 @@ app.post('/message', function (req, res) {
                 }
             }
             break;
+
         case 'gem마일리지':
             send = {
                 'message': {
@@ -183,6 +210,7 @@ app.post('/message', function (req, res) {
                 }
             }
             break;
+
         case '연성대':
         case '대학교':
         case '연성대학교':
@@ -192,7 +220,7 @@ app.post('/message', function (req, res) {
                 },
                 keyboard: {
                     'type': 'buttons',
-                    'buttons': ['연성대학교위치']
+                    'buttons': ['연성대학교위치', '연성대날씨']
                 },
                 "message_button": {
                     "label": "연성대학교 홈페이지 링크",
@@ -212,6 +240,8 @@ app.post('/message', function (req, res) {
                 }
             }
             break;
+
+        case '실습':
         case '현장실습':
             send = {
                 'message': {
@@ -219,7 +249,7 @@ app.post('/message', function (req, res) {
                 },
                 keyboard: {
                     'type': 'buttons',
-                    'buttons': ['방학 현장실습','학기제 현장실습']
+                    'buttons': ['방학 현장실습', '학기제 현장실습']
                 },
                 "message_button": {
                     "label": "연성대학교 홈페이지 링크",
@@ -227,6 +257,9 @@ app.post('/message', function (req, res) {
                 }
             }
             break;
+
+        case '하계현장실습':
+        case '동계현장실습':
         case '방학현장실습':
             send = {
                 'message': {
@@ -238,6 +271,8 @@ app.post('/message', function (req, res) {
                 }
             }
             break;
+
+        case '학기현장실습':
         case '학기제현장실습':
             send = {
                 'message': {
@@ -246,6 +281,15 @@ app.post('/message', function (req, res) {
                 "message_button": {
                     "label": "연성대학교 학과별 홈페이지",
                     "url": Univstudy
+                }
+            }
+            break;
+
+        case '연성대날씨':
+        case '날씨':
+            send = {
+                'message': {
+                    'text': '『 연성대학교 날씨 입니다 』\n현재온도 : ' + weatherTem + '℃ \n' + weatherResult
                 }
             }
             break;

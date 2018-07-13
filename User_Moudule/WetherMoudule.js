@@ -119,7 +119,6 @@ module.exports.tem = function (callback) {
         todaytimeForecast = '0810';
     } else if (todaytimeForecast < 1410) {
         todaytimeForecast = '1110';
-        MXtem = '1110';
     } else if (todaytimeForecast < 1710) {
         todaytimeForecast = '1410';
     } else if (todaytimeForecast < 2010) {

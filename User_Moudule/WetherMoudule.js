@@ -30,7 +30,7 @@ module.exports.weather = function (callback) {
     } else {
         todaytime = hour + '40';
     }
-    if (hour < 10) {
+    if (todaytime < 1040) {
         todaytime = "0" + todaytime;
     }
 

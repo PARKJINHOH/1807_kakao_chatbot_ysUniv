@@ -281,7 +281,7 @@ app.post('/message', function (req, res) {
         case '날씨':
             send = {
                 'message': {
-                    'text': '연성대학교 현재 온도 : ' + weatherTem + '℃ \n' + weatherResult
+                    'text': '『 연성대학교 날씨 입니다 』\n현재온도 : ' + weatherTem + '℃ \n' + weatherResult
                 }
             }
             break;

@@ -196,7 +196,7 @@ module.exports.tem = function (callback) {
             if (record.fcstDate == checkdate && record.category === "TMX") {
                 resultTMX = JSON.stringify(record.fcstValue);
             }
-            outresult = '『 연성대학교 날씨 입니다 』\n습   도 : ' + resultREH + '% \n강수확률 : ' + resultPOP + '%\n구   름 : ' + resultSKY + '\n내일 최저/최고기온 : ' + resultTMN + '/' + resultTMX + '°C 입니다.';
+            outresult = '습    도 : ' + resultREH + '% \n강수확률 : ' + resultPOP + '%\n구    름 : ' + resultSKY + '\n내일 최저/최고기온 : ' + resultTMN + '/' + resultTMX + '°C 입니다.';
         });
 
         callback(outresult)

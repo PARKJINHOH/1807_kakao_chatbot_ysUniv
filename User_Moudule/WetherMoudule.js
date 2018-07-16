@@ -94,6 +94,20 @@ module.exports.tem = function (callback) {
     var todaydateForecast = yyyyy + '' + mmm + '' + ddd;
 
     /*시간 데이터값*/
+    //Update Date
+    var uphour = today.getHours();
+    var upmin = today.getMinutes();
+    var updYear = today.getFullYear();
+    var updMonth = today.getMonth();
+    var updDate = today.getDate();
+    var upTime;
+    if (upmin < 40) {
+        upTime = uphour - 1 + '시 ' + '40분';
+    } else {
+        upTime = uphour + '시 ' + '40분';
+    }
+
+    //서버에서 시간 불러오는 변수
     var hourForecast = today.getHours();
     var minForecast = today.getMinutes();
     if (hourForecast < 10) {
@@ -195,7 +209,7 @@ module.exports.tem = function (callback) {
             if (record.fcstDate == checkdate && record.category === "TMX") {
                 resultTMX = JSON.stringify(record.fcstValue);
             }
-            outresult = '습    도 : ' + resultREH + '% \n강수확률 : ' + resultPOP + '%\n구    름 : ' + resultSKY + '\n내일 최저/최고기온 : ' + resultTMN + '/' + resultTMX + '°C 입니다.';
+            outresult = '습      도 : ' + resultREH + '% \n강수확률 : ' + resultPOP + '%\n구      름 : ' + resultSKY + '\n내일 최저/최고기온 : ' + resultTMN + '°C/' + resultTMX + '°C 입니다. \n업데이트 성공 시각 : ' + updYear + '.' + updMonth + '.' + updDate + '.  ' + upTime + '\n서비스 제공자 : 기상청';
         });
 
         callback(outresult)

@@ -209,7 +209,7 @@ module.exports.tem = function (callback) {
             if (record.fcstDate == checkdate && record.category === "TMX") {
                 resultTMX = JSON.stringify(record.fcstValue);
             }
-            outresult = '습      도 : ' + resultREH + '% \n강수확률 : ' + resultPOP + '%\n구      름 : ' + resultSKY + '\n내일 최저/최고기온 : ' + resultTMN + '°C/' + resultTMX + '°C 입니다. \n업데이트 성공 시각 : ' + updYear + '.' + updMonth + '.' + updDate + '.  ' + upTime + '\n날씨 서비스 제공자 : 공공데이터포털';
+            outresult = '습      도 : ' + resultREH + '% \n강수확률 : ' + resultPOP + '%\n구      름 : ' + resultSKY + '\n내일 최저/최고기온 : ' + resultTMN + '°C/' + resultTMX + '°C 입니다. \n업데이트 성공 시각 : ' + updYear + '.' + updMonth + '.' + updDate + '.  ' + upTime + '\n서비스 제공자 : 기상청';
         });
 
         callback(outresult)

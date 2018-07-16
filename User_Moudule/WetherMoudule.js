@@ -139,7 +139,6 @@ module.exports.tem = function (callback) {
         todaytimeForecast = '1710';
     } else if (todaytimeForecast < 2310) {
         todaytimeForecast = '2010';
-        upTime = '20시 10분';
     }
 
 
@@ -210,7 +209,7 @@ module.exports.tem = function (callback) {
             if (record.fcstDate == checkdate && record.category === "TMX") {
                 resultTMX = JSON.stringify(record.fcstValue);
             }
-            outresult = '습      도 : ' + resultREH + '% \n강수확률 : ' + resultPOP + '%\n구      름 : ' + resultSKY + '\n내일 최저/최고기온 : ' + resultTMN + '/' + resultTMX + '°C 입니다. \n 업데이트 성공 시각 : ' + updYear + '.' + updMonth + '.' + updDate + '.  ' + upTime + '\n날씨 서비스 제공자 : 공공데이터포털';
+            outresult = '습      도 : ' + resultREH + '% \n강수확률 : ' + resultPOP + '%\n구      름 : ' + resultSKY + '\n내일 최저/최고기온 : ' + resultTMN + '°C/' + resultTMX + '°C 입니다. \n업데이트 성공 시각 : ' + updYear + '.' + updMonth + '.' + updDate + '.  ' + upTime + '\n날씨 서비스 제공자 : 공공데이터포털';
         });
 
         callback(outresult)

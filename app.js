@@ -5,10 +5,13 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var app = express();
 
-//모듈
+//날씨 모듈
 var weathermoudule = require("./User_Moudule/WetherMoudule.js");
 var weatherTem; // 온도 변수
 var weatherResult; // 습도, 기온 등
+
+//Talk 모듈
+var usermoudule = require("./User_Moudule/UserTalk.js");
 
 
 //url 모음
@@ -67,7 +70,7 @@ app.get('/keyboard', function (req, res) {
     //전달할 데이터
     var data = {
         'type': 'buttons',
-        'buttons': ['도움말','연성대 현재날씨','장학금','현장실습']
+        'buttons': ['도움말', '연성대 현재날씨', '장학금', '현장실습']
     };
     // json 형식으로 응답
     res.json(data);
@@ -113,6 +116,11 @@ app.post('/message', function (req, res) {
     console.log('전달받은 메시지 : ' + msg);
 
     var send = {}; //응답할 데이터
+    usermoudule.talk(trimstring, function (resultTalk) {
+        send = {
+            resultTalk
+        };
+    });
 
     switch (trimstring) {
         case '도움말':

@@ -49,7 +49,6 @@ module.exports.weather = function (callback) {
         url: url + queryParams,
         method: 'GET'
     }, function (error, response, body) {
-        console.log(url + queryParams);
         var jsonbody = JSON.parse(body);
         var items = jsonbody.response.body.items.item;
 
@@ -57,16 +56,12 @@ module.exports.weather = function (callback) {
             if (record.category === "T1H") {
                 var resultbody;
                 resultbody = JSON.stringify(record.obsrValue);
-                callback(resultbody);
+                callback('▷' + resultbody+'°C');
             }
         });
 
     });
 };
-
-
-
-
 
 
 
@@ -192,7 +187,7 @@ module.exports.tem = function (callback) {
     }
     console.log('예보시간 : ' + todaytimeForecast);
     console.log('6시간 뒤 : ' + year3 + mon3 + date3);
-    
+
 
 
     var queryParamsForecast = '?' + encodeURIComponent('ServiceKey') + '=' + Key; /* Service Key*/
@@ -263,7 +258,7 @@ module.exports.tem = function (callback) {
                 resultT3H = JSON.stringify(record.fcstValue);
             }
             // 6시간뒤 온도
-            if (record.category === "T3H" && record.fcstDate == year3 +''+ mon3 + date3 && record.fcstTime == fcstTime6) {
+            if (record.category === "T3H" && record.fcstDate == year3 + '' + mon3 + date3 && record.fcstTime == fcstTime6) {
                 resultT3H6 = JSON.stringify(record.fcstValue);
             }
             //최저
@@ -274,7 +269,7 @@ module.exports.tem = function (callback) {
             if (record.fcstDate == checkdate && record.category === "TMX") {
                 resultTMX = JSON.stringify(record.fcstValue);
             }
-            outresult = '3시간/6시간 뒤 : ' + resultT3H + '°C/' + resultT3H6 + '°C\n습      도 : ' + resultREH + '% \n강수확률 : ' + resultPOP + '%\n구      름 : ' + resultSKY + '\n내일 최저/최고기온 : ' + resultTMN + '°C/' + resultTMX + '°C 입니다. \n업데이트 시각 : ' + updYear + '.' + updMonth + '.' + updDate + '.  ' + upTime + '\n서비스 제공자 : 기상청';
+            outresult = '3시간/6시간 뒤\n▷' + resultT3H + '°C/' + resultT3H6 + '°C\n습      도\n▷' + resultREH + '% \n강수확률\n▷' + resultPOP + '%\n구      름\n▷' + resultSKY + '\n내일 최저/최고기온\n▷' + resultTMN + '°C/' + resultTMX + '°C\n업데이트 시각\n▷' + updYear + '.' + updMonth + '.' + updDate + '.  ' + upTime + '\n서비스 제공자\n▷기상청';
         });
 
         callback(outresult)

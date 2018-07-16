@@ -10,9 +10,6 @@ var weathermoudule = require("./User_Moudule/WetherMoudule.js");
 var weatherTem; // 온도 변수
 var weatherResult; // 습도, 기온 등
 
-//Talk 모듈
-var usermoudule = require("./User_Moudule/UserTalk.js");
-
 
 //url 모음
 var ys_homepage = 'http://www.yeonsung.ac.kr';
@@ -112,15 +109,9 @@ app.post('/message', function (req, res) {
         }
     }
 
-
     console.log('전달받은 메시지 : ' + msg);
 
     var send = {}; //응답할 데이터
-    usermoudule.talk(trimstring, function (resultTalk) {
-        send = {
-            resultTalk
-        };
-    });
 
     switch (trimstring) {
         case '도움말':
@@ -297,7 +288,7 @@ app.post('/message', function (req, res) {
         case '날씨':
             send = {
                 'message': {
-                    'text': '『 연성대학교 날씨 입니다 』\n현재온도 : ' + weatherTem + '℃ \n' + weatherResult
+                    'text': '『 연성대학교 날씨 입니다 』\n현재온도\n' + weatherTem + '\n' + weatherResult
                 }
             }
             break;

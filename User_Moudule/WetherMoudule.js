@@ -56,7 +56,7 @@ module.exports.weather = function (callback) {
             if (record.category === "T1H") {
                 var resultbody;
                 resultbody = JSON.stringify(record.obsrValue);
-                callback('▷' + resultbody+'°C');
+                callback('▷' + resultbody + '°C');
             }
         });
 
@@ -163,11 +163,20 @@ module.exports.tem = function (callback) {
         fcstTime6 = '2100';
     } else if (todaytimeForecast < 2010) {
         todaytimeForecast = '1710';
+        date3 = date3 + 1;
         fcstTime = '2100';
         fcstTime6 = '0000';
+        if (ddd === monArr[Number(mmm) - 1]) {
+            mon3 = mon3 + 1;
+            date3 = '01';
+            if (mmm == 12) {
+                year3 = year3 + 1;
+                mon3 = '01';
+            }
+        }
     } else if (todaytimeForecast < 2310) {
         todaytimeForecast = '2010';
-        date3 + 1;
+        date3 = date3 + 1;
         fcstTime = '0000';
         fcstTime6 = '0300';
         if (ddd === monArr[Number(mmm) - 1]) {

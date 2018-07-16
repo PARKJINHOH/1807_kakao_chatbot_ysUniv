@@ -95,10 +95,17 @@ module.exports.tem = function (callback) {
 
     /*시간 데이터값*/
     //Update Date
+    var uphour = today.getHours();
+    var upmin = today.getMinutes();
     var updYear = today.getFullYear();
     var updMonth = today.getMonth();
     var updDate = today.getDate();
     var upTime;
+    if (upmin < 40) {
+        upTime = uphour - 1 + '시 ' + '40분';
+    } else {
+        upTime = uphour + '시 ' + '40분';
+    }
 
     //서버에서 시간 불러오는 변수
     var hourForecast = today.getHours();
@@ -120,22 +127,16 @@ module.exports.tem = function (callback) {
         }
     } else if (todaytimeForecast < 0510) {
         todaytimeForecast = '0210';
-        upTime = '2시 10분';
     } else if (todaytimeForecast < 0810) {
         todaytimeForecast = '0510';
-        upTime = '5시 10분';
     } else if (todaytimeForecast < 1110) {
         todaytimeForecast = '0810';
-        upTime = '8시 10분';
     } else if (todaytimeForecast < 1410) {
         todaytimeForecast = '1110';
-        upTime = '11시 10분';
     } else if (todaytimeForecast < 1710) {
         todaytimeForecast = '1410';
-        upTime = '14시 10분';
     } else if (todaytimeForecast < 2010) {
         todaytimeForecast = '1710';
-        upTime = '17시 10분';
     } else if (todaytimeForecast < 2310) {
         todaytimeForecast = '2010';
         upTime = '20시 10분';

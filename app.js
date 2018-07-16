@@ -67,7 +67,7 @@ app.get('/keyboard', function (req, res) {
     //전달할 데이터
     var data = {
         'type': 'buttons',
-        'buttons': ['도움말','연성대 현재날씨']
+        'buttons': ['도움말','연성대 현재날씨','장학금','현장실습']
     };
     // json 형식으로 응답
     res.json(data);
@@ -284,7 +284,7 @@ app.post('/message', function (req, res) {
                 }
             }
             break;
-        case '연성대 현재날씨':
+        case '연성대현재날씨':
         case '연성대날씨':
         case '날씨':
             send = {

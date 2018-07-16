@@ -49,8 +49,7 @@ module.exports.weather = function (callback) {
         url: url + queryParams,
         method: 'GET'
     }, function (error, response, body) {
-
-
+        console.log(url + queryParams);
         var jsonbody = JSON.parse(body);
         var items = jsonbody.response.body.items.item;
 
@@ -93,6 +92,21 @@ module.exports.tem = function (callback) {
 
     var todaydateForecast = yyyyy + '' + mmm + '' + ddd;
 
+    var monArr = new Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31); // 1월~12월 일수
+    var mon3 = today.getMonth() + 1; //3시간 뒤 (월)
+    var year3 = today.getFullYear(); //3시간 뒤 (년) 해가 바뀔떄 사용...
+    var date3 = today.getDate();
+    //2월 윤년 구하기
+    if (mmm != '02') {
+        lastDay = monArr[Number(mmm) - 1];
+    } else {
+        if ((yyyyy % 4 == 0 && yyyyy % 100 != 0) || yyyyy % 400 == 0) {
+            monArr[1] = 29;
+        } else {
+            monArr[1] = 28;
+        }
+    }
+
     /*시간 데이터값*/
     //Update Date
     var uphour = today.getHours();
@@ -102,9 +116,9 @@ module.exports.tem = function (callback) {
     var updDate = today.getDate();
     var upTime;
     if (upmin < 40) {
-        upTime = uphour - 1 + '시 ' + '40분';
+        upTime = uphour - 1 + '시 ' + '00분';
     } else {
-        upTime = uphour + '시 ' + '40분';
+        upTime = uphour + '시 ' + '00분';
     }
 
     //서버에서 시간 불러오는 변수
@@ -117,29 +131,68 @@ module.exports.tem = function (callback) {
         minForecast = "0" + minForecast;
     }
     var todaytimeForecast = hourForecast + '' + minForecast;
+    var fcstTime;
+    var fcstTime6;
 
     if (todaytimeForecast < 0210) {
         todaytimeForecast = '2310';
+        fcstTime = '0300';
+        fcstTime6 = '0600';
         if (ddd === 01) {
-            mmm = today.getMonth - 1;
+            mmm = today.getMonth;
+            ddd = today.getDate - 1;
+            todaydateForecast = yyyyy + '' + mmm + '' + ddd;
+        } else {
             ddd = today.getDate - 1;
             todaydateForecast = yyyyy + '' + mmm + '' + ddd;
         }
     } else if (todaytimeForecast < 0510) {
         todaytimeForecast = '0210';
+        fcstTime = '0600';
+        fcstTime6 = '0900';
     } else if (todaytimeForecast < 0810) {
         todaytimeForecast = '0510';
+        fcstTime = '0900';
+        fcstTime6 = '1200';
     } else if (todaytimeForecast < 1110) {
         todaytimeForecast = '0810';
+        fcstTime = '1200';
+        fcstTime6 = '1500';
     } else if (todaytimeForecast < 1410) {
         todaytimeForecast = '1110';
+        fcstTime = '1500';
+        fcstTime6 = '1800';
     } else if (todaytimeForecast < 1710) {
         todaytimeForecast = '1410';
+        fcstTime = '1800';
+        fcstTime6 = '2100';
     } else if (todaytimeForecast < 2010) {
         todaytimeForecast = '1710';
+        fcstTime = '2100';
+        fcstTime6 = '0000';
     } else if (todaytimeForecast < 2310) {
         todaytimeForecast = '2010';
+        date3 + 1;
+        fcstTime = '0000';
+        fcstTime6 = '0300';
+        if (ddd === monArr[Number(mmm) - 1]) {
+            mon3 = mon3 + 1;
+            date3 = '01';
+            if (mmm == 12) {
+                year3 = year3 + 1;
+                mon3 = '01';
+            }
+        }
     }
+    if (mon3 < 10) {
+        mon3 = "0" + mon3;
+    }
+    if (date3 < 10) {
+        date3 = "0" + date3;
+    }
+    console.log('예보시간 : ' + todaytimeForecast);
+    console.log('6시간 뒤 : ' + year3 + mon3 + date3);
+    
 
 
     var queryParamsForecast = '?' + encodeURIComponent('ServiceKey') + '=' + Key; /* Service Key*/
@@ -148,7 +201,7 @@ module.exports.tem = function (callback) {
     queryParamsForecast += '&' + encodeURIComponent('base_time') + '=' + encodeURIComponent(todaytimeForecast); /* 매시간 */
     queryParamsForecast += '&' + encodeURIComponent('nx') + '=' + encodeURIComponent('59'); /* 예보지점의 X 좌표값 */
     queryParamsForecast += '&' + encodeURIComponent('ny') + '=' + encodeURIComponent('123'); /* 예보지점의 Y 좌표값 */
-    queryParamsForecast += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('300'); /* 한 페이지 결과 수 */
+    queryParamsForecast += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('100'); /* 한 페이지 결과 수 */
     queryParamsForecast += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /* 페이지 번호 */
     queryParamsForecast += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json'); /* xml(기본값), json */
 
@@ -158,6 +211,8 @@ module.exports.tem = function (callback) {
     var resultTMN; //최저
     var resultTMX; //최고
     var outresult; //결과
+    var resultT3H; //3시간뒤
+    var resultT3H6; //6시간뒤
 
 
     //동네
@@ -165,19 +220,32 @@ module.exports.tem = function (callback) {
         url: urlSpaceData + queryParamsForecast,
         method: 'GET'
     }, function (error, response, bodyForecast) {
-
         var jsonbodyForecast = JSON.parse(bodyForecast);
         var itemsForecast = jsonbodyForecast.response.body.items.item;
 
+        var dddd = today.getDate() + 1;
+        var mmmm = today.getMonth() + 1; //January is 0!
+        var yyyyyy = today.getFullYear();
+        if (mmmm < 10) {
+            mmmm = "0" + mmmm;
+        }
+        if (dddd < 10) {
+            dddd = "0" + dddd;
+        }
+        var checkdate = yyyyyy + '' + mmmm + '' + dddd;
+
 
         itemsForecast.forEach(function (record) {
-            if (record.category === "POP") {
+            //강수
+            if (record.category === "POP" && record.fcstDate == todaydateForecast && record.fcstTime == fcstTime) {
                 resultPOP = JSON.stringify(record.fcstValue);
             }
-            if (record.category === "REH") {
+            //습도
+            if (record.category === "REH" && record.fcstDate == todaydateForecast && record.fcstTime == fcstTime) {
                 resultREH = JSON.stringify(record.fcstValue);
             }
-            if (record.category === "SKY") {
+            //구름
+            if (record.category === "SKY" && record.fcstDate == todaydateForecast && record.fcstTime == fcstTime) {
                 resultSKY = JSON.stringify(record.fcstValue);
                 resultSKY = Number(resultSKY);
                 if (resultSKY === 1) {
@@ -190,17 +258,14 @@ module.exports.tem = function (callback) {
                     resultSKY = '흐림';
                 }
             }
-
-            var dddd = today.getDate() + 1;
-            var mmmm = today.getMonth() + 1; //January is 0!
-            var yyyyyy = today.getFullYear();
-            if (mmmm < 10) {
-                mmmm = "0" + mmmm;
+            // 3시간뒤 온도
+            if (record.category === "T3H" && record.fcstDate == todaydateForecast && record.fcstTime == fcstTime) {
+                resultT3H = JSON.stringify(record.fcstValue);
             }
-            if (dddd < 10) {
-                dddd = "0" + dddd;
+            // 6시간뒤 온도
+            if (record.category === "T3H" && record.fcstDate == year3 +''+ mon3 + date3 && record.fcstTime == fcstTime6) {
+                resultT3H6 = JSON.stringify(record.fcstValue);
             }
-            var checkdate = yyyyyy + '' + mmmm + '' + dddd;
             //최저
             if (record.fcstDate == checkdate && record.category === "TMN") {
                 resultTMN = JSON.stringify(record.fcstValue);
@@ -209,7 +274,7 @@ module.exports.tem = function (callback) {
             if (record.fcstDate == checkdate && record.category === "TMX") {
                 resultTMX = JSON.stringify(record.fcstValue);
             }
-            outresult = '습      도 : ' + resultREH + '% \n강수확률 : ' + resultPOP + '%\n구      름 : ' + resultSKY + '\n내일 최저/최고기온 : ' + resultTMN + '°C/' + resultTMX + '°C 입니다. \n업데이트 성공 시각 : ' + updYear + '.' + updMonth + '.' + updDate + '.  ' + upTime + '\n서비스 제공자 : 기상청';
+            outresult = '3시간/6시간 뒤 : ' + resultT3H + '°C/' + resultT3H6 + '°C\n습      도 : ' + resultREH + '% \n강수확률 : ' + resultPOP + '%\n구      름 : ' + resultSKY + '\n내일 최저/최고기온 : ' + resultTMN + '°C/' + resultTMX + '°C 입니다. \n업데이트 시각 : ' + updYear + '.' + updMonth + '.' + updDate + '.  ' + upTime + '\n서비스 제공자 : 기상청';
         });
 
         callback(outresult)

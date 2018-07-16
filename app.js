@@ -58,11 +58,9 @@ app.use(bodyParser.json());
 app.get('/keyboard', function (req, res) {
     weathermoudule.weather(function (result) {
         weatherTem = result;
-        console.log("----현재온도----\n" + weatherTem);
     });
     weathermoudule.tem(function (result) {
         weatherResult = result;
-        console.log("----현재기상----\n" + weatherResult);
     });
     //전달할 데이터
     var data = {
@@ -79,11 +77,9 @@ app.get('/keyboard', function (req, res) {
 app.post('/message', function (req, res) {
     weathermoudule.weather(function (result) {
         weatherTem = result;
-        console.log("----현재온도----\n" + weatherTem);
     });
     weathermoudule.tem(function (result) {
         weatherResult = result;
-        console.log("----현재기상----\n" + weatherResult);
     });
     //string = 입력받은 카카오톡 문자
     var string = req.body.content;

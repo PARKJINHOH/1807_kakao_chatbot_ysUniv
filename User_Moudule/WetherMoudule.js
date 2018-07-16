@@ -94,6 +94,13 @@ module.exports.tem = function (callback) {
     var todaydateForecast = yyyyy + '' + mmm + '' + ddd;
 
     /*시간 데이터값*/
+    //Update Date
+    var updYear = today.getFullYear();
+    var updMonth = today.getMonth();
+    var updDate = today.getDate();
+    var upTime;
+
+    //서버에서 시간 불러오는 변수
     var hourForecast = today.getHours();
     var minForecast = today.getMinutes();
     if (hourForecast < 10) {
@@ -113,18 +120,25 @@ module.exports.tem = function (callback) {
         }
     } else if (todaytimeForecast < 0510) {
         todaytimeForecast = '0210';
+        upTime = '2시 10분';
     } else if (todaytimeForecast < 0810) {
         todaytimeForecast = '0510';
+        upTime = '5시 10분';
     } else if (todaytimeForecast < 1110) {
         todaytimeForecast = '0810';
+        upTime = '8시 10분';
     } else if (todaytimeForecast < 1410) {
         todaytimeForecast = '1110';
+        upTime = '11시 10분';
     } else if (todaytimeForecast < 1710) {
         todaytimeForecast = '1410';
+        upTime = '14시 10분';
     } else if (todaytimeForecast < 2010) {
         todaytimeForecast = '1710';
+        upTime = '17시 10분';
     } else if (todaytimeForecast < 2310) {
         todaytimeForecast = '2010';
+        upTime = '20시 10분';
     }
 
 
@@ -195,7 +209,7 @@ module.exports.tem = function (callback) {
             if (record.fcstDate == checkdate && record.category === "TMX") {
                 resultTMX = JSON.stringify(record.fcstValue);
             }
-            outresult = '습    도 : ' + resultREH + '% \n강수확률 : ' + resultPOP + '%\n구    름 : ' + resultSKY + '\n내일 최저/최고기온 : ' + resultTMN + '/' + resultTMX + '°C 입니다.';
+            outresult = '습      도 : ' + resultREH + '% \n강수확률 : ' + resultPOP + '%\n구      름 : ' + resultSKY + '\n내일 최저/최고기온 : ' + resultTMN + '/' + resultTMX + '°C 입니다. \n 업데이트 성공 시각 : ' + updYear + '.' + updMonth + '.' + updDate + '.  ' + upTime + '\n날씨 서비스 제공자 : 공공데이터포털';
         });
 
         callback(outresult)

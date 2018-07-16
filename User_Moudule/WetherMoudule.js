@@ -278,7 +278,7 @@ module.exports.tem = function (callback) {
             if (record.fcstDate == checkdate && record.category === "TMX") {
                 resultTMX = JSON.stringify(record.fcstValue);
             }
-            outresult = '3시간/6시간 뒤\n▷' + resultT3H + '°C/' + resultT3H6 + '°C\n습      도\n▷' + resultREH + '% \n강수확률\n▷' + resultPOP + '%\n구      름\n▷' + resultSKY + '\n내일 최저/최고기온\n▷' + resultTMN + '°C/' + resultTMX + '°C\n업데이트 시각\n▷' + updYear + '.' + updMonth + '.' + updDate + '.  ' + upTime + '\n서비스 제공자\n▷기상청';
+            outresult = '3시간/6시간 뒤\n▷' + resultT3H + '°C/' + resultT3H6 + '°C\n습      도\n▷' + resultREH + '% \n강수확률\n▷' + resultPOP + '%\n구      름\n▷' + resultSKY + '\n내일 최저/최고기온\n▷' + resultTMN + '°C/' + resultTMX + '°C\n서비스 제공자\n▷기상청';
         });
 
         callback(outresult)

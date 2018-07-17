@@ -49,6 +49,7 @@ module.exports.weather = function (callback) {
         url: url + queryParams,
         method: 'GET'
     }, function (error, response, body) {
+
         var jsonbody = JSON.parse(body);
         var items = jsonbody.response.body.items.item;
 
@@ -62,6 +63,10 @@ module.exports.weather = function (callback) {
 
     });
 };
+
+
+
+
 
 
 
@@ -85,7 +90,7 @@ module.exports.tem = function (callback) {
         ddd = "0" + ddd;
     }
 
-    var todaydateForecast = yyyyy + '' + mmm + '' + ddd;
+    var todaydateForecast = '' + yyyyy + mmm + ddd;
 
     var monArr = new Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31); // 1월~12월 일수
     var mon3 = today.getMonth() + 1; //3시간 뒤 (월)
@@ -136,10 +141,10 @@ module.exports.tem = function (callback) {
         if (ddd === 01) {
             mmm = today.getMonth;
             ddd = today.getDate - 1;
-            todaydateForecast = yyyyy + '' + mmm + '' + ddd;
+            todaydateForecast = '' + yyyyy + mmm + ddd;
         } else {
             ddd = today.getDate - 1;
-            todaydateForecast = yyyyy + '' + mmm + '' + ddd;
+            todaydateForecast = '' + yyyyy + mmm + ddd;
         }
     } else if (todaytimeForecast < 0510) {
         todaytimeForecast = '0210';
@@ -174,6 +179,7 @@ module.exports.tem = function (callback) {
                 mon3 = '01';
             }
         }
+
     } else if (todaytimeForecast < 2310) {
         todaytimeForecast = '2010';
         date3 = date3 + 1;
@@ -194,10 +200,6 @@ module.exports.tem = function (callback) {
     if (date3 < 10) {
         date3 = "0" + date3;
     }
-    console.log('예보시간 : ' + todaytimeForecast);
-    console.log('6시간 뒤 : ' + year3 + mon3 + date3);
-
-
 
     var queryParamsForecast = '?' + encodeURIComponent('ServiceKey') + '=' + Key; /* Service Key*/
     queryParamsForecast += '&' + encodeURIComponent('ServiceKey') + '=' + encodeURIComponent(Key); /* 서비스 인증 */
@@ -224,20 +226,31 @@ module.exports.tem = function (callback) {
         url: urlSpaceData + queryParamsForecast,
         method: 'GET'
     }, function (error, response, bodyForecast) {
+        console.log(urlSpaceData + queryParamsForecast);
         var jsonbodyForecast = JSON.parse(bodyForecast);
         var itemsForecast = jsonbodyForecast.response.body.items.item;
 
         var dddd = today.getDate() + 1;
         var mmmm = today.getMonth() + 1; //January is 0!
         var yyyyyy = today.getFullYear();
-        if (mmmm < 10) {
-            mmmm = "0" + mmmm;
+        var date2310; //2310분 이전 날짜
+        if (todaytimeForecast >= 0 && todaytimeForecast < 0210) {
+            if (mmm < 10) {
+                mmm = "0" + mmm;
+            }
+            if (ddd < 10) {
+                ddd = "0" + ddd;
+            }
+            date2310 = '' + yyyyy + mmm + ddd;
+        } else {
+            if (mmmm < 10) {
+                mmmm = "0" + mmmm;
+            }
+            if (dddd < 10) {
+                dddd = "0" + dddd;
+            }
+            date2310 = '' + yyyyyy + mmmm + dddd;
         }
-        if (dddd < 10) {
-            dddd = "0" + dddd;
-        }
-        var checkdate = yyyyyy + '' + mmmm + '' + dddd;
-
 
         itemsForecast.forEach(function (record) {
             //강수
@@ -271,14 +284,14 @@ module.exports.tem = function (callback) {
                 resultT3H6 = JSON.stringify(record.fcstValue);
             }
             //최저
-            if (record.fcstDate == checkdate && record.category === "TMN") {
+            if (record.fcstDate == date2310 && record.category === "TMN") {
                 resultTMN = JSON.stringify(record.fcstValue);
             }
             //최고
-            if (record.fcstDate == checkdate && record.category === "TMX") {
+            if (record.fcstDate == date2310 && record.category === "TMX") {
                 resultTMX = JSON.stringify(record.fcstValue);
             }
-            outresult = '3시간/6시간 뒤\n▷' + resultT3H + '°C/' + resultT3H6 + '°C\n현재습도\n▷' + resultREH + '% \n강수확률\n▷' + resultPOP + '%\n구름상태\n▷' + resultSKY + '\n내일 최저/최고기온\n▷' + resultTMN + '°C/' + resultTMX + '°C\n서비스 제공자\n▷기상청';
+             outresult = '3시간/6시간 뒤\n▷' + resultT3H + '°C/' + resultT3H6 + '°C\n현재습도\n▷' + resultREH + '% \n강수확률\n▷' + resultPOP + '%\n구름상태\n▷' + resultSKY + '\n내일 최저/최고기온\n▷' + resultTMN + '°C/' + resultTMX + '°C\n서비스 제공자\n▷기상청';
         });
 
         callback(outresult)

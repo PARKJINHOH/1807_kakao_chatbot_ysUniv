@@ -1,10 +1,8 @@
 module.exports.weather = function (callback) {
     var request = require('request');
     //초단기실황 (현재 온도, 하늘 상태맑음(1), 구름조금(2), 구름많음(3), 흐림(4), 강수형태(비,비/눈,눈), 습도)
-
     var url = 'http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib';
     var Key = 'RbpZDI%2BoQZSqLj4VxAWdpA07wRUxDlpOp%2B47NNUJepyEr9VBxh0b7zdLCdNxNRDR34lV0%2BjAAiGgqNsN3o%2BOoQ%3D%3D';
-
 
     /*날짜 데이터값*/
     var today = new Date();
@@ -53,18 +51,19 @@ module.exports.weather = function (callback) {
         var jsonbody = JSON.parse(body);
         var items = jsonbody.response.body.items.item;
 
-        items.forEach(function (record) {
-            if (record.category === "T1H") {
-                var resultbody;
-                resultbody = JSON.stringify(record.obsrValue);
-                callback('▷' + resultbody + '°C');
-            }
-        });
-
+        try {
+            items.forEach(function (record) {
+                if (record.category === "T1H") {
+                    var resultbody;
+                    resultbody = JSON.stringify(record.obsrValue);
+                    callback('▷' + resultbody + '°C');
+                }
+            });
+        } catch (exception) {
+            callback('죄송합니다. \n서버상에 문제가 생긴듯 합니다. 빠르게 대처하겠습니다.');
+        }
     });
 };
-
-
 
 
 
@@ -179,7 +178,6 @@ module.exports.tem = function (callback) {
                 mon3 = '01';
             }
         }
-
     } else if (todaytimeForecast < 2310) {
         todaytimeForecast = '2010';
         date3 = date3 + 1;
@@ -251,49 +249,51 @@ module.exports.tem = function (callback) {
             }
             date2310 = '' + yyyyyy + mmmm + dddd;
         }
-
-        itemsForecast.forEach(function (record) {
-            //강수
-            if (record.category === "POP" && record.fcstDate == todaydateForecast && record.fcstTime == fcstTime) {
-                resultPOP = JSON.stringify(record.fcstValue);
-            }
-            //습도
-            if (record.category === "REH" && record.fcstDate == todaydateForecast && record.fcstTime == fcstTime) {
-                resultREH = JSON.stringify(record.fcstValue);
-            }
-            //구름
-            if (record.category === "SKY" && record.fcstDate == todaydateForecast && record.fcstTime == fcstTime) {
-                resultSKY = JSON.stringify(record.fcstValue);
-                resultSKY = Number(resultSKY);
-                if (resultSKY === 1) {
-                    resultSKY = '맑음';
-                } else if (resultSKY === 2) {
-                    resultSKY = '구름조금';
-                } else if (resultSKY === 3) {
-                    resultSKY = '구름많음';
-                } else if (resultSKY === 4) {
-                    resultSKY = '흐림';
+        try {
+            itemsForecast.forEach(function (record) {
+                //강수
+                if (record.category === "POP" && record.fcstDate == todaydateForecast && record.fcstTime == fcstTime) {
+                    resultPOP = JSON.stringify(record.fcstValue);
                 }
-            }
-            // 3시간뒤 온도
-            if (record.category === "T3H" && record.fcstDate == todaydateForecast && record.fcstTime == fcstTime) {
-                resultT3H = JSON.stringify(record.fcstValue);
-            }
-            // 6시간뒤 온도
-            if (record.category === "T3H" && record.fcstDate == year3 + '' + mon3 + date3 && record.fcstTime == fcstTime6) {
-                resultT3H6 = JSON.stringify(record.fcstValue);
-            }
-            //최저
-            if (record.fcstDate == date2310 && record.category === "TMN") {
-                resultTMN = JSON.stringify(record.fcstValue);
-            }
-            //최고
-            if (record.fcstDate == date2310 && record.category === "TMX") {
-                resultTMX = JSON.stringify(record.fcstValue);
-            }
-             outresult = '3시간/6시간 뒤\n▷' + resultT3H + '°C/' + resultT3H6 + '°C\n현재습도\n▷' + resultREH + '% \n강수확률\n▷' + resultPOP + '%\n구름상태\n▷' + resultSKY + '\n내일 최저/최고기온\n▷' + resultTMN + '°C/' + resultTMX + '°C\n서비스 제공자\n▷기상청';
-        });
-
+                //습도
+                if (record.category === "REH" && record.fcstDate == todaydateForecast && record.fcstTime == fcstTime) {
+                    resultREH = JSON.stringify(record.fcstValue);
+                }
+                //구름
+                if (record.category === "SKY" && record.fcstDate == todaydateForecast && record.fcstTime == fcstTime) {
+                    resultSKY = JSON.stringify(record.fcstValue);
+                    resultSKY = Number(resultSKY);
+                    if (resultSKY === 1) {
+                        resultSKY = '맑음';
+                    } else if (resultSKY === 2) {
+                        resultSKY = '구름조금';
+                    } else if (resultSKY === 3) {
+                        resultSKY = '구름많음';
+                    } else if (resultSKY === 4) {
+                        resultSKY = '흐림';
+                    }
+                }
+                // 3시간뒤 온도
+                if (record.category === "T3H" && record.fcstDate == todaydateForecast && record.fcstTime == fcstTime) {
+                    resultT3H = JSON.stringify(record.fcstValue);
+                }
+                // 6시간뒤 온도
+                if (record.category === "T3H" && record.fcstDate == year3 + '' + mon3 + date3 && record.fcstTime == fcstTime6) {
+                    resultT3H6 = JSON.stringify(record.fcstValue);
+                }
+                //최저
+                if (record.fcstDate == date2310 && record.category === "TMN") {
+                    resultTMN = JSON.stringify(record.fcstValue);
+                }
+                //최고
+                if (record.fcstDate == date2310 && record.category === "TMX") {
+                    resultTMX = JSON.stringify(record.fcstValue);
+                }
+                outresult = '3시간/6시간 뒤\n▷' + resultT3H + '°C/' + resultT3H6 + '°C\n현재습도\n▷' + resultREH + '% \n강수확률\n▷' + resultPOP + '%\n구름상태\n▷' + resultSKY + '\n내일 최저/최고기온\n▷' + resultTMN + '°C/' + resultTMX + '°C\n서비스 제공자\n▷기상청';
+            });
+        } catch (exception) {
+            callback('죄송합니다. \n서버상에 문제가 생긴듯 합니다. 빠르게 대처하겠습니다.');
+        }
         callback(outresult)
 
     });

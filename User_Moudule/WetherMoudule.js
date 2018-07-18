@@ -56,7 +56,7 @@ module.exports.weather = function (callback) {
                 if (record.category === "T1H") {
                     var resultbody;
                     resultbody = JSON.stringify(record.obsrValue);
-                    callback('▷' + resultbody + '°C');
+                    callback('▷ ' + resultbody + '°C');
                 }
             });
         } catch (exception) {
@@ -289,7 +289,7 @@ module.exports.tem = function (callback) {
                 if (record.fcstDate == date2310 && record.category === "TMX") {
                     resultTMX = JSON.stringify(record.fcstValue);
                 }
-                outresult = '3시간/6시간 뒤\n▷' + resultT3H + '°C/' + resultT3H6 + '°C\n현재습도\n▷' + resultREH + '% \n강수확률\n▷' + resultPOP + '%\n구름상태\n▷' + resultSKY + '\n내일 최저/최고기온\n▷' + resultTMN + '°C/' + resultTMX + '°C\n서비스 제공자\n▷기상청';
+                outresult = '3시간/6시간 뒤\n▷ ' + resultT3H + '°C/' + resultT3H6 + '°C\n현재습도\n▷ ' + resultREH + '% \n강수확률\n▷ ' + resultPOP + '%\n구름상태\n▷ ' + resultSKY + '\n내일 최저/최고기온\n▷ ' + resultTMN + '°C/' + resultTMX + '°C\n서비스 제공자\n▷ 기상청';
             });
         } catch (exception) {
             callback('죄송합니다. \n서버상에 문제가 생긴듯 합니다. 빠르게 대처하겠습니다.');

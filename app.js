@@ -60,11 +60,12 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 //http://서버주소/keyboard
+var searchlist = ['날씨', '지하철', '장학금', '성적', '현장실습', '재수강', '대학교', '학식']
 app.get('/keyboard', function (req, res) {
     //전달할 데이터
     var data = {
         'type': 'buttons',
-        'buttons': ['도움말', '연성대 현재날씨', '장학금', '현장실습']
+        'buttons': searchlist
     };
     // json 형식으로 응답
     res.json(data);
@@ -92,25 +93,25 @@ app.post('/message', function (req, res) {
     //모든 공백 제거 / 소문자 치환
     var trimstring = string.replace(/(\s*)/g, "").toLowerCase();
 
-    // 최종 전달받은 메시지 변수
-    var msg = "";
+//    // 최종 전달받은 메시지 변수
+//    var msg = "";
+//
+//    //챗봇이 알아들을 수 있는 큰 분류 list
+//    ;
+//
+//    // for문할 때, 입력된게 맞지 않으면 list 이동할 때 사용.
+//    var listcount = 0;
+//
+//    for (var i = 0; i < searchlist.length; i++) {
+//        if (trimstring.indexOf(searchlist[i]) != -1) {
+//            msg = trimstring;
+//            break;
+//        } else {
+//            listcount++;
+//        }
+//    }
 
-    //챗봇이 알아들을 수 있는 큰 분류 list
-    var searchlist = ['도움말', '날씨', '지하철', '장학금', '성적', '현장실습', '재수강', '대학교', '학식'];
-
-    // for문할 때, 입력된게 맞지 않으면 list 이동할 때 사용.
-    var listcount = 0;
-
-    for (var i = 0; i < searchlist.length; i++) {
-        if (trimstring.indexOf(searchlist[i]) != -1) {
-            msg = trimstring;
-            break;
-        } else {
-            listcount++;
-        }
-    }
-
-    console.log('전달받은 메시지 : ' + msg);
+    console.log('전달받은 메시지 : ' + trimstring);
 
     var send = {}; //응답할 데이터
 
@@ -149,6 +150,10 @@ app.post('/message', function (req, res) {
             send = {
                 'message': {
                     'text': '국가 장학금 1유형 \n 매년 2회 실시를 하며 신청일정에 신청을 꼭 해야 합니다. 장학금 금액은 가구소득분위에 따라서 장학금을 차등 지급 합니다. 올해년도 신청일자는 ~ 입니다.'
+                },
+                keyboard: {
+                    'type': 'buttons',
+                    'buttons': searchlist
                 }
             }
             break;
@@ -158,6 +163,10 @@ app.post('/message', function (req, res) {
             send = {
                 'message': {
                     'text': '2유형 장학금은 대학교에서 주는 장학금으로 1유형 장학금을 받은 학생중에서 선발이 됩니다. 1유형을 받았어도 선택이 안될 수 있으니 심사를 기다려 보세요. \n 만약 1유형+2유형이 한학기 등록금을 초과할 경우 초과분은 미지급되며, 이후 학교에서의 성적장학금, 복지장학금등 기타 장학금은 받을 수 없습니다.. 자세한건 [장학금 지급 순서]로 검색해 보세요.'
+                },
+                keyboard: {
+                    'type': 'buttons',
+                    'buttons': searchlist
                 }
             }
             break;
@@ -182,6 +191,10 @@ app.post('/message', function (req, res) {
             send = {
                 'message': {
                     'text': '장학금 지급 순서\n 장학금은 고지서에서 빠지며 빠지는 순서는 국가장학금 > 성적장학금으로 빠진다. 만약 한학기 등록금이 300만원 일때, 국가장학금으로 250만원을 받았고 성적장학금으로 100만원을 받을때, 성적장학금은 50만원만 받을 수 있고 50만원은 받을 수 없습니다.'
+                },
+                keyboard: {
+                    'type': 'buttons',
+                    'buttons': searchlist
                 }
             }
             break;
@@ -190,6 +203,10 @@ app.post('/message', function (req, res) {
             send = {
                 'message': {
                     'text': '성적장학금 \n 학년별 성적이 우수한 학생을 위에서부터 지급, 인원은 인원수에 따라 다르며 4명~7명정도 받는다. \n 1등은 한학기 전액, 2등은 50%, 3등은 30%, 4등은 20% 이며 변동이 많으니 학과사무실 및 담임교수님께 문의를 해보는게 정확하다. \n 성적장학금은 계좌로 주는게 아닌, 국가장학금처럼 고지서에서 자동으로 빠진다.'
+                },
+                keyboard: {
+                    'type': 'buttons',
+                    'buttons': searchlist
                 }
             }
             break;
@@ -202,6 +219,10 @@ app.post('/message', function (req, res) {
                 "message_button": {
                     "label": "커리어&Gem마일리지 안내표",
                     "url": ys_mileage
+                },
+                keyboard: {
+                    'type': 'buttons',
+                    'buttons': searchlist
                 }
             }
             break;
@@ -239,7 +260,11 @@ app.post('/message', function (req, res) {
                     "message_button": {
                         "label": "연성대학교 주소 위치",
                         "url": ys_location
-                    }
+                    },
+                keyboard: {
+                    'type': 'buttons',
+                    'buttons': searchlist
+                }
                 }
             }
             break;
@@ -271,6 +296,10 @@ app.post('/message', function (req, res) {
                 "message_button": {
                     "label": "연성대학교 학과별 홈페이지",
                     "url": Univstudy
+                },
+                keyboard: {
+                    'type': 'buttons',
+                    'buttons': searchlist
                 }
             }
             break;
@@ -284,6 +313,10 @@ app.post('/message', function (req, res) {
                 "message_button": {
                     "label": "연성대학교 학과별 홈페이지",
                     "url": Univstudy
+                },
+                keyboard: {
+                    'type': 'buttons',
+                    'buttons': searchlist
                 }
             }
             break;
@@ -293,6 +326,10 @@ app.post('/message', function (req, res) {
             send = {
                 'message': {
                     'text': '『 연성대학교 날씨 입니다 』\n현재온도\n' + weatherTem + '\n' + weatherResult
+                },
+                keyboard: {
+                    'type': 'buttons',
+                    'buttons': searchlist
                 }
             }
             break;
@@ -320,6 +357,10 @@ app.post('/message', function (req, res) {
             send = {
                 'message': {
                     'text': trainup
+                },
+                keyboard: {
+                    'type': 'buttons',
+                    'buttons': searchlist
                 }
             }
             break;
@@ -331,6 +372,10 @@ app.post('/message', function (req, res) {
             send = {
                 'message': {
                     'text': traindown
+                },
+                keyboard: {
+                    'type': 'buttons',
+                    'buttons': searchlist
                 }
             }
             break;
@@ -339,7 +384,7 @@ app.post('/message', function (req, res) {
         case '종료':
             send = {
                 'message': {
-                    'text': traindown
+                    'text': '채팅이 종료되었습니다. 도움이 필요하시면 메시지를 입력해주세요.'
                 }
             }
             break;

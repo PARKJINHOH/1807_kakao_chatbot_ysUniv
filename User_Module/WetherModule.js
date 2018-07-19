@@ -1,4 +1,4 @@
-module.exports.weather = function (callback) {
+module.exports.wether = function (callback) {
     var request = require('request');
     //초단기실황 (현재 온도, 하늘 상태맑음(1), 구름조금(2), 구름많음(3), 흐림(4), 강수형태(비,비/눈,눈), 습도)
     var url = 'http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib';
@@ -224,7 +224,6 @@ module.exports.tem = function (callback) {
         url: urlSpaceData + queryParamsForecast,
         method: 'GET'
     }, function (error, response, bodyForecast) {
-        console.log(urlSpaceData + queryParamsForecast);
         var jsonbodyForecast = JSON.parse(bodyForecast);
         var itemsForecast = jsonbodyForecast.response.body.items.item;
 

@@ -45,7 +45,7 @@ module.exports.trainup = function (callback) {
                     arvlMsgbe22 = JSON.stringify(record.arvlMsg3).slice(1, -1); // 열차위치한 역
                 }
             });
-            console.log('▶상행 열차 정보◀' + '\n┌◈도착지 방면\n└ ' + trainLineNm + '\n┌◈열차 상태\n└ ' + arvlMsgbe1 + '\n┌◈열차 위치\n└ ' + arvlMsgbe2 + '역' +
+            callback('▶상행 열차 정보◀' + '\n┌◈도착지 방면\n└ ' + trainLineNm + '\n┌◈열차 상태\n└ ' + arvlMsgbe1 + '\n┌◈열차 위치\n└ ' + arvlMsgbe2 + '역' +
                 '\n \n▶상행 [다음] 열차 정보◀' + '\n┌◈도착지 방면\n└ ' + trainLineNm2 + '\n┌◈열차 상태\n└ ' + arvlMsgbe12 + '\n┌◈열차 위치\n└ ' + arvlMsgbe22 + '역' +
                 '\n \n▶상행 [급행] 열차 정보◀' + '\n┌◈도착지 방면\n└ ' + trainLineNmep + '\n┌◈열차 상태\n└ ' + arvlMsgbe1ep + '\n┌◈열차 위치\n└ ' + arvlMsgbe2ep + '역');
         } catch (exception) {
@@ -101,7 +101,7 @@ module.exports.traindown = function (callback) {
                     arvlMsgbe22D = JSON.stringify(record.arvlMsg3).slice(1, -1); // 열차위치한 역
                 }
             });
-            console.log('▶하행 열차 정보◀' + '\n┌◈도착지 방면\n└ ' + trainLineNmD + '\n┌◈열차 상태\n└ ' + arvlMsgbe1D + '\n┌◈열차 위치\n└ ' + arvlMsgbe2D + '역' +
+            callback('▶하행 열차 정보◀' + '\n┌◈도착지 방면\n└ ' + trainLineNmD + '\n┌◈열차 상태\n└ ' + arvlMsgbe1D + '\n┌◈열차 위치\n└ ' + arvlMsgbe2D + '역' +
                 '\n \n▶하행 [다음] 열차 정보◀' + '\n┌◈도착지 방면\n└ ' + trainLineNm2D + '\n┌◈열차 상태\n└ ' + arvlMsgbe12D + '\n┌◈열차 위치\n└ ' + arvlMsgbe22D + '역' +
                 '\n \n▶하행 [급행] 열차 정보◀' + '\n┌◈도착지 방면\n└ ' + trainLineNmepD + '\n┌◈열차 상태\n└ ' + arvlMsgbe1epD + '\n┌◈열차 위치\n└ ' + arvlMsgbe2epD + '역');
         } catch (exception) {

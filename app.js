@@ -316,7 +316,7 @@ app.post('/message', function (req, res) {
         case '안양역상행선':
             send = {
                 'message': {
-                    'text': '' + trainup
+                    'text': trainup
                 }
             }
             break;
@@ -327,7 +327,7 @@ app.post('/message', function (req, res) {
         case '안양역하행선':
             send = {
                 'message': {
-                    'text': '' + traindown
+                    'text': traindown
                 }
             }
             break;

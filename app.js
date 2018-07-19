@@ -61,18 +61,6 @@ app.use(bodyParser.json());
 
 //http://서버주소/keyboard
 app.get('/keyboard', function (req, res) {
-    weathermodule.weather(function (result) {
-        weatherTem = result;
-    });
-    weathermodule.tem(function (result) {
-        weatherResult = result;
-    });
-    subwaymodule.trainup(function (resultup) {
-        trainup = resultup;
-    });
-    subwaymodule.traindown(function (resultdown) {
-        traindown = resultdown;
-    });
     //전달할 데이터
     var data = {
         'type': 'buttons',
@@ -91,6 +79,12 @@ app.post('/message', function (req, res) {
     });
     weathermodule.tem(function (result) {
         weatherResult = result;
+    });
+    subwaymodule.trainup(function (resultup) {
+        trainup = resultup;
+    });
+    subwaymodule.traindown(function (resultdown) {
+        traindown = resultdown;
     });
     //string = 입력받은 카카오톡 문자
     var string = req.body.content;

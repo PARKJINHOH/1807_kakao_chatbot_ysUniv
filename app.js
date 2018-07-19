@@ -6,7 +6,7 @@ var logger = require('morgan');
 var app = express();
 
 //날씨 모듈
-var weathermodule = require("./User_Module/weatherModule.js");
+var weathermodule = require("./User_Module/WeatherModule.js");
 var weatherTem; // 온도 변수
 var weatherResult; // 습도, 기온 등
 

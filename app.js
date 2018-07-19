@@ -6,9 +6,9 @@ var logger = require('morgan');
 var app = express();
 
 //날씨 모듈
-var wethermodule = require("./User_Module/WetherModule.js");
-var wetherTem; // 온도 변수
-var wetherResult; // 습도, 기온 등
+var weathermodule = require("./User_Module/weatherModule.js");
+var weatherTem; // 온도 변수
+var weatherResult; // 습도, 기온 등
 
 
 //url 모음
@@ -56,11 +56,11 @@ app.use(bodyParser.json());
 
 //http://서버주소/keyboard
 app.get('/keyboard', function (req, res) {
-    wethermodule.wether(function (result) {
-        wetherTem = result;
+    weathermodule.weather(function (result) {
+        weatherTem = result;
     });
-    wethermodule.tem(function (result) {
-        wetherResult = result;
+    weathermodule.tem(function (result) {
+        weatherResult = result;
     });
     //전달할 데이터
     var data = {
@@ -75,11 +75,11 @@ app.get('/keyboard', function (req, res) {
 
 //http://서버주소/message
 app.post('/message', function (req, res) {
-    wethermodule.wether(function (result) {
-        wetherTem = result;
+    weathermodule.weather(function (result) {
+        weatherTem = result;
     });
-    wethermodule.tem(function (result) {
-        wetherResult = result;
+    weathermodule.tem(function (result) {
+        weatherResult = result;
     });
     //string = 입력받은 카카오톡 문자
     var string = req.body.content;
@@ -284,7 +284,7 @@ app.post('/message', function (req, res) {
         case '날씨':
             send = {
                 'message': {
-                    'text': '『 연성대학교 날씨 입니다 』\n현재온도\n' + wetherTem + '\n' + wetherResult
+                    'text': '『 연성대학교 날씨 입니다 』\n현재온도\n' + weatherTem + '\n' + weatherResult
                 }
             }
             break;

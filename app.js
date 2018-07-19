@@ -5,8 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var app = express();
 
-//모듈
-var weathermoudule = require("./User_Moudule/WetherMoudule.js");
+//날씨 모듈
+var weathermodule = require("./User_Module/WeatherModule.js");
 var weatherTem; // 온도 변수
 var weatherResult; // 습도, 기온 등
 
@@ -56,18 +56,16 @@ app.use(bodyParser.json());
 
 //http://서버주소/keyboard
 app.get('/keyboard', function (req, res) {
-    weathermoudule.weather(function (result) {
+    weathermodule.weather(function (result) {
         weatherTem = result;
-        console.log("----현재온도----\n" + weatherTem);
     });
-    weathermoudule.tem(function (result) {
+    weathermodule.tem(function (result) {
         weatherResult = result;
-        console.log("----현재기상----\n" + weatherResult);
     });
     //전달할 데이터
     var data = {
         'type': 'buttons',
-        'buttons': ['도움말']
+        'buttons': ['도움말', '연성대 현재날씨', '장학금', '현장실습']
     };
     // json 형식으로 응답
     res.json(data);
@@ -77,13 +75,11 @@ app.get('/keyboard', function (req, res) {
 
 //http://서버주소/message
 app.post('/message', function (req, res) {
-    weathermoudule.weather(function (result) {
+    weathermodule.weather(function (result) {
         weatherTem = result;
-        console.log("----현재온도----\n" + weatherTem);
     });
-    weathermoudule.tem(function (result) {
+    weathermodule.tem(function (result) {
         weatherResult = result;
-        console.log("----현재기상----\n" + weatherResult);
     });
     //string = 입력받은 카카오톡 문자
     var string = req.body.content;
@@ -108,7 +104,6 @@ app.post('/message', function (req, res) {
             listcount++;
         }
     }
-
 
     console.log('전달받은 메시지 : ' + msg);
 
@@ -284,12 +279,12 @@ app.post('/message', function (req, res) {
                 }
             }
             break;
-
+        case '연성대현재날씨':
         case '연성대날씨':
         case '날씨':
             send = {
                 'message': {
-                    'text': '『 연성대학교 날씨 입니다 』\n현재온도 : ' + weatherTem + '℃ \n' + weatherResult
+                    'text': '『 연성대학교 날씨 입니다 』\n현재온도\n' + weatherTem + '\n' + weatherResult
                 }
             }
             break;

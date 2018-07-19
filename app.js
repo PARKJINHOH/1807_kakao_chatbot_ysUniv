@@ -371,7 +371,7 @@ app.post('/message', function (req, res) {
         case '종료':
             send = {
                 'message': {
-                    'text': '채팅이 종료되었습니다. 도움이 필요하시면 도움말 메시지를 입력해 주세요.
+                    'text': '채팅이 종료되었습니다. 도움이 필요하시면 도움말 메시지를 입력해 주세요.'
                 }
             }
             break;

@@ -96,7 +96,7 @@ app.post('/message', function (req, res) {
     var msg = "";
 
     //챗봇이 알아들을 수 있는 큰 분류 list
-    var searchlist = ['도움말', '장학금', '성적', '현장실습', '재수강', '대학교', '학식'];
+    var searchlist = ['도움말', '날씨', '지하철', '장학금', '성적', '현장실습', '재수강', '대학교', '학식'];
 
     // for문할 때, 입력된게 맞지 않으면 list 이동할 때 사용.
     var listcount = 0;
@@ -118,8 +118,11 @@ app.post('/message', function (req, res) {
         case '도움말':
             send = {
                 'message': {
-                    'text': '********명령어******** \n ⊙ 국가장학금, 장학금 \n ⊙ f학점 , 성적 \n ⊙ 현장실습, 방학 현장실습, 학기제 현장실습 \n ⊙ 재수강 \n ⊙ 학식, 급식 \n ⊙ 대학교, 연성대학교 \n' +
-                        '업데이트 : 2018/07/13\nby연성대 컴퓨터 소프트웨어_PJH'
+                    'text': '연성대학교에 대해 알려드립니다. 검색해 보세요.'
+                },
+                keyboard: {
+                    'type': 'buttons',
+                    'buttons': searchlist
                 }
             }
             break;
@@ -332,10 +335,20 @@ app.post('/message', function (req, res) {
             }
             break;
 
+        case '!종료':
+        case '종료':
+            send = {
+                'message': {
+                    'text': traindown
+                }
+            }
+            break;
+
         default:
             send = {
                 'message': {
-                    'text': '죄송합니다. 학습이 부족해 알 수 없는 명령입니다. 좀 더 공부하겠습니다.'
+                    'text': '죄송합니다. 학습이 부족해 알 수 없는 명령입니다. \n 채팅 내용은 상담 품질 관리를 위해 데이터베이스에 저장됩니다. 상담을 시작하려면 메시지를 입력해주세요. 채팅을 원치 않으시면 "!종료"를 입력해주세요.
+                    '
                 }
             }
             break;

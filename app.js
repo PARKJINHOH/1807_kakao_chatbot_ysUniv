@@ -75,15 +75,7 @@ app.get('/keyboard', function (req, res) {
 
 //http://서버주소/message
 app.post('/message', function (req, res) {
-    weathermodule.weather(function (result) {
-        weatherTem = result;
-    });
-    weathermodule.tem(function (result) {
-        weatherResult = result;
-    });
-    subwaymodule.traindown(function (resultdown) {
-        traindown = resultdown;
-    });
+
     //string = 입력받은 카카오톡 문자
     var string = req.body.content;
 
@@ -210,6 +202,10 @@ app.post('/message', function (req, res) {
             send = {
                 'message': {
                     'text': '성적 , 성적분포, 성적 정리표 \n 성적은 학점과 점수가 있으며 학점은 4.5만점, 점수는 100점 만점 입니다. 성적 분포는 A는 최대 30%를 교수님이 줄 수 있습니다. \n   점수     학점   등급 \n100~95     4.5     A+ \n94~90      4.0     A0 \n89~85      3.5     B+\n84~80      3.0     B0\n84~80      3.0     B0\n79~76      2.5     C+\n75~70      2.0     C0\n69~65      1.5     D+\n64~60      1.0     D0\n59~           -       F\n \n 순위는 따로 통합정보시스템에 없으며, 학과사무실에 전화를 해야만 알 수 있습니다.'
+                },
+                keyboard: {
+                    'type': 'buttons',
+                    'buttons': searchlist
                 }
             }
             break;
@@ -302,6 +298,12 @@ app.post('/message', function (req, res) {
         case '연성대현재날씨':
         case '연성대날씨':
         case '날씨':
+            weathermodule.weather(function (result) {
+                weatherTem = result;
+            });
+            weathermodule.tem(function (result) {
+                weatherResult = result;
+            });
             send = {
                 'message': {
                     'text': '『 연성대학교 날씨 입니다 』\n현재온도\n' + weatherTem + '\n' + weatherResult
@@ -325,7 +327,7 @@ app.post('/message', function (req, res) {
                 },
                 keyboard: {
                     'type': 'buttons',
-                    'buttons': ['안양역상행선', '안양역하행선']
+                    'buttons': ['안양역 상행선', '안양역 하행선']
                 }
             }
             break;
@@ -351,6 +353,9 @@ app.post('/message', function (req, res) {
         case '하행선':
         case '안양역하행':
         case '안양역하행선':
+            subwaymodule.traindown(function (resultdown) {
+                traindown = resultdown;
+            });
             send = {
                 'message': {
                     'text': traindown
@@ -366,7 +371,7 @@ app.post('/message', function (req, res) {
         case '종료':
             send = {
                 'message': {
-                    'text': '채팅이 종료되었습니다. 도움이 필요하시면 버튼을 클릭해주세요.'
+                    'text': '채팅이 종료되었습니다. 도움이 필요하시면 도움말 메시지를 입력해 주세요.
                 }
             }
             break;

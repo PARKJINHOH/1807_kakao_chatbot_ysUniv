@@ -81,9 +81,6 @@ app.post('/message', function (req, res) {
     weathermodule.tem(function (result) {
         weatherResult = result;
     });
-    subwaymodule.trainup(function (resultup) {
-        trainup = resultup;
-    });
     subwaymodule.traindown(function (resultdown) {
         traindown = resultdown;
     });
@@ -92,24 +89,6 @@ app.post('/message', function (req, res) {
 
     //모든 공백 제거 / 소문자 치환
     var trimstring = string.replace(/(\s*)/g, "").toLowerCase();
-
-//    // 최종 전달받은 메시지 변수
-//    var msg = "";
-//
-//    //챗봇이 알아들을 수 있는 큰 분류 list
-//    ;
-//
-//    // for문할 때, 입력된게 맞지 않으면 list 이동할 때 사용.
-//    var listcount = 0;
-//
-//    for (var i = 0; i < searchlist.length; i++) {
-//        if (trimstring.indexOf(searchlist[i]) != -1) {
-//            msg = trimstring;
-//            break;
-//        } else {
-//            listcount++;
-//        }
-//    }
 
     console.log('전달받은 메시지 : ' + trimstring);
 
@@ -190,7 +169,7 @@ app.post('/message', function (req, res) {
         case '장학금지급순서':
             send = {
                 'message': {
-                    'text': '장학금 지급 순서\n 장학금은 고지서에서 빠지며 빠지는 순서는 국가장학금 > 성적장학금으로 빠진다. 만약 한학기 등록금이 300만원 일때, 국가장학금으로 250만원을 받았고 성적장학금으로 100만원을 받을때, 성적장학금은 50만원만 받을 수 있고 50만원은 받을 수 없습니다.'
+                    'text': '장학금 지급 순서\n 장학금은 고지서에서 빠지며 순서는 1.국가장학금 2.성적장학금 순서대로 빠진다. 만약 한학기 등록금이 300만원 일때, 국가장학금으로 250만원을 받았고 성적장학금으로 100만원을 받을때, 성적장학금은 50만원만 받을 수 있고 50만원은 받을 수 없습니다.'
                 },
                 keyboard: {
                     'type': 'buttons',
@@ -261,10 +240,10 @@ app.post('/message', function (req, res) {
                         "label": "연성대학교 주소 위치",
                         "url": ys_location
                     },
-                keyboard: {
-                    'type': 'buttons',
-                    'buttons': searchlist
-                }
+                    keyboard: {
+                        'type': 'buttons',
+                        'buttons': searchlist
+                    }
                 }
             }
             break;
@@ -354,6 +333,9 @@ app.post('/message', function (req, res) {
         case '상행선':
         case '안양역상행':
         case '안양역상행선':
+            subwaymodule.trainup(function (resultup) {
+                trainup = resultup;
+            });
             send = {
                 'message': {
                     'text': trainup
@@ -384,7 +366,7 @@ app.post('/message', function (req, res) {
         case '종료':
             send = {
                 'message': {
-                    'text': '채팅이 종료되었습니다. 도움이 필요하시면 메시지를 입력해주세요.'
+                    'text': '채팅이 종료되었습니다. 도움이 필요하시면 버튼을 클릭해주세요.'
                 }
             }
             break;
@@ -392,11 +374,11 @@ app.post('/message', function (req, res) {
         default:
             send = {
                 'message': {
-                    'text': '죄송합니다. 학습이 부족해 알 수 없는 명령입니다. \n 채팅 내용은 상담 품질 관리를 위해 데이터베이스에 저장됩니다. 상담을 시작하려면 메시지를 입력해주세요. 채팅을 원치 않으시면 "!종료"를 입력해주세요. \n 도움이 필요하시다면 도움말을 클릭해 주세요.'
+                    'text': '죄송합니다. 학습이 부족해 알 수 없는 명령입니다. \n 채팅 내용은 상담 품질 관리를 위해 데이터베이스에 저장됩니다. 상담을 시작하려면 메시지를 입력해주세요. 채팅을 원치 않으시면 "종료"를 눌러주세요. \n 도움이 필요하시다면 도움말을 클릭해 주세요.'
                 },
                 keyboard: {
                     'type': 'buttons',
-                    'buttons': ['도움말']
+                    'buttons': ['도움말', '종료']
                 }
             }
             break;

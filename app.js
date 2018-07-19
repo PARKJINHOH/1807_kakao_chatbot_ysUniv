@@ -10,6 +10,11 @@ var weathermodule = require("./User_Module/WeatherModule.js");
 var weatherTem; // 온도 변수
 var weatherResult; // 습도, 기온 등
 
+//지하철 모듈
+var subwaymodule = require("./User_Module/SubwayModule.js");
+var trainup, traindown; //상행, 하행
+
+
 
 //url 모음
 var ys_homepage = 'http://www.yeonsung.ac.kr';
@@ -61,6 +66,12 @@ app.get('/keyboard', function (req, res) {
     });
     weathermodule.tem(function (result) {
         weatherResult = result;
+    });
+    subwaymodule.trainup(function (resultup) {
+        trainup = resultup;
+    });
+    subwaymodule.traindown(function (resultdown) {
+        traindown = resultdown;
     });
     //전달할 데이터
     var data = {
@@ -289,6 +300,42 @@ app.post('/message', function (req, res) {
             }
             break;
 
+        case '전철':
+        case '안양역':
+        case '역':
+        case '열차':
+        case '열차시간':
+            send = {
+                'message': {
+                    'text': '상행선, 하행선을 선택해 주세요.'
+                },
+                keyboard: {
+                    'type': 'buttons',
+                    'buttons': ['안양역상행선', '안양역하행선']
+                }
+            }
+            break;
+        case '상행':
+        case '상행선':
+        case '안양역상행':
+        case '안양역상행선':
+            send = {
+                'message': {
+                    'text': trainup
+                }
+            }
+            break;
+        case '하행':
+        case '하행선':
+        case '안양역하행선':
+        case '안양역하행선':
+            send = {
+                'message': {
+                    'text': traindown
+                }
+            }
+            break;
+
         default:
             send = {
                 'message': {
@@ -299,8 +346,6 @@ app.post('/message', function (req, res) {
     }
     res.json(send) //send에 저장된 데이터 전달    
 });
-
-
 /* 설정 끝 */
 
 

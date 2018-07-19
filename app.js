@@ -305,6 +305,7 @@ app.post('/message', function (req, res) {
         case '역':
         case '열차':
         case '열차시간':
+        case '지하철':
             send = {
                 'message': {
                     'text': '상행선, 하행선을 선택해 주세요.'
@@ -321,17 +322,18 @@ app.post('/message', function (req, res) {
         case '안양역상행선':
             send = {
                 'message': {
-                    'text': trainup
+                    'text': '' + trainup
                 }
             }
             break;
+
         case '하행':
         case '하행선':
-        case '안양역하행선':
+        case '안양역하행':
         case '안양역하행선':
             send = {
                 'message': {
-                    'text': traindown
+                    'text': '' + traindown
                 }
             }
             break;

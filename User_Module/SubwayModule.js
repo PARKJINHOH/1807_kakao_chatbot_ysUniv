@@ -107,13 +107,13 @@ module.exports.traindown = function (callback) {
             items.forEach(function (record) {
 
                 //하행 첫번째
-                if (record.ordkey.substr(0, 2) === '11' && record.btrainSttus === null && record.ordkey.substr(2, 3) < 10 && JSON.stringify(record.bstatnNm).slice(1, -1) == '광명' && record.ordkey.substr(record.ordkey.length - 1, record.ordkey.length) === '0') {
+                if (record.ordkey.substr(0, 2) === '11' && record.btrainSttus === null && record.ordkey.substr(2, 3) < 10 && record.bstatnNm == '광명') {
 
                     arvlMsgbe2D = JSON.stringify(record.arvlMsg3).slice(1, -1); // 열차위치한 역
-                    
+
                     traind1 = '▶하행 [일반] 열차 정보◀' + '\n┌◈도착지 방면\n└ ' + '광명행' + '\n┌◈열차 상태\n└ ' + '안양역 미정차 열차입니다.' + '\n┌◈열차 위치\n└ ' + arvlMsgbe2D + '역';
 
-                } else if (record.ordkey.substr(0, 2) === '11' && record.btrainSttus === null && record.ordkey.substr(2, 3) < 10 && !(JSON.stringify(record.bstatnNm).slice(1, -1) == '광명') && record.ordkey.substr(record.ordkey.length - 1, record.ordkey.length) === '0') {
+                } else if (record.ordkey.substr(0, 2) === '11' && record.btrainSttus === null && record.ordkey.substr(2, 3) < 10 && !(record.bstatnNm == '광명') && record.ordkey.substr(record.ordkey.length - 1, record.ordkey.length) === '0') {
 
                     /*하행 일반*/
                     trainLineNmD = JSON.stringify(record.trainLineNm).slice(1, -1); // 도착지 방면 .slice(1, -1) 큰따음표 제거
@@ -133,7 +133,7 @@ module.exports.traindown = function (callback) {
                     trainLineNmepD = JSON.stringify(record.trainLineNm).slice(1, -1); // 도착지 방면
                     arvlMsgbe1epD = JSON.stringify(record.arvlMsg2).slice(1, -1); // 전역 진입, 전역 도착, 몇번째 등
                     arvlMsgbe2epD = JSON.stringify(record.arvlMsg3).slice(1, -1); // 열차위치한 역
-                    
+
                     traind2 = '\n \n▶하행 [급행] 열차 정보◀' + '\n┌◈도착지 방면\n└ ' + trainLineNmepD + '\n┌◈열차 상태\n└ ' + arvlMsgbe1epD + '\n┌◈열차 위치\n└ ' + arvlMsgbe2epD + '역' + '\n┌▣(서울역-신창)급행 정차역\n 안양-금천구청(3번째 전역)-영등포(8)-서울역(14)' + '\n┌▣(용산-신창)급행 정차역\n 안양-가산디지털단지(5번째 전역)-구로(6)-신도림(7)-영등포(8)-신길(9)';
                 }
 
@@ -142,17 +142,16 @@ module.exports.traindown = function (callback) {
                 }
 
                 //하행 두번째
-                if (record.ordkey.substr(0, 2) === '12' && record.btrainSttus === null && record.ordkey.substr(2, 3) < 13 && record.ordkey.substr(record.ordkey.length - 1, record.ordkey.length) === '0') {
+                if (record.ordkey.substr(0, 2) === '12' && record.btrainSttus === null && record.ordkey.substr(2, 3) < 13 && record.ordkey.substr(record.ordkey.length - 1, record.ordkey.length) === '0' && !(record.bstatnNm == '광명')) {
                     /*2번째 하행 일반*/
                     trainLineNm2D = JSON.stringify(record.trainLineNm).slice(1, -1); // 도착지 방면
                     arvlMsgbe12D = JSON.stringify(record.arvlMsg2).slice(1, -1); // 전역 진입, 전역 도착, 몇번째 등
                     arvlMsgbe22D = JSON.stringify(record.arvlMsg3).slice(1, -1); // 열차위치한 역
 
                     traind3 = '\n \n▶하행 [다음] 열차 정보◀' + '\n┌◈도착지 방면\n└ ' + trainLineNm2D + '\n┌◈열차 상태\n└ ' + arvlMsgbe12D + '\n┌◈열차 위치\n└ ' + arvlMsgbe22D + '역';
-                }
-
-                if (!traind3) {
-                    traind3 = '\n \n▶하행 [다음] 열차 정보◀\n열차정보가 없습니다. 막차 시간, 미발차, 너무 멀리 있는 열차 일 수 있으니 확인해주세요.';
+                } else if (record.ordkey.substr(0, 2) === '12' && record.btrainSttus === null && record.ordkey.substr(2, 3) < 13 && record.bstatnNm == '광명') {
+                    arvlMsgbe22D = JSON.stringify(record.arvlMsg3).slice(1, -1); // 열차위치한 역
+                    traind3 = '\n \n▶하행 [다음] 열차 정보◀' + '\n┌◈도착지 방면\n└ ' + '광명행' + '\n┌◈열차 상태\n└ ' + '안양역 미정차 열차입니다.' + '\n┌◈열차 위치\n└ ' + arvlMsgbe22D + '역';
                 }
 
             });

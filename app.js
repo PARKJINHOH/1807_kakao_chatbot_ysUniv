@@ -76,6 +76,10 @@ app.get('/keyboard', function (req, res) {
 //http://서버주소/message
 app.post('/message', function (req, res) {
 
+    subwaymodule.traindown(function (resultdown) {});
+    weathermodule.weather(function (result) {});
+    weathermodule.tem(function (result) {});
+
     //string = 입력받은 카카오톡 문자
     var string = req.body.content;
 

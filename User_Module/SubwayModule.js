@@ -153,6 +153,9 @@ module.exports.traindown = function (callback) {
                     arvlMsgbe22D = JSON.stringify(record.arvlMsg3).slice(1, -1); // 열차위치한 역
                     traind3 = '\n \n▶하행 [다음] 열차 정보◀' + '\n┌◈도착지 방면\n└ ' + '광명행' + '\n┌◈열차 상태\n└ ' + '안양역 미정차 열차입니다.' + '\n┌◈열차 위치\n└ ' + arvlMsgbe22D + '역';
                 }
+                if (!traind3) {
+                    train1 = '▶하행 [다음] 열차 정보◀\n열차정보가 없습니다. 막차 시간, 미발차, 너무 멀리 있는 열차 일 수 있으니 확인해주세요.';
+                }
 
             });
             callback(traind1 + traind2 + traind3 +

@@ -62,10 +62,19 @@ app.use(bodyParser.json());
 //http://서버주소/keyboard
 var searchlist = ['날씨', '지하철', '장학금', '성적', '현장실습', '재수강', '대학교', '학식']
 app.get('/keyboard', function (req, res) {
-    
-    subwaymodule.traindown(function (resultdown) {});
-    weathermodule.weather(function (result) {});
-    weathermodule.tem(function (result) {});
+
+    weathermodule.weather(function (result) {
+        weatherTem = result;
+    });
+    weathermodule.tem(function (result) {
+        weatherResult = result;
+    });
+    subwaymodule.traindown(function (resultdown) {
+        traindown = resultdown;
+    });
+    subwaymodule.trainup(function (resultup) {
+        trainup = resultup;
+    });
     //전달할 데이터
     var data = {
         'type': 'buttons',

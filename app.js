@@ -14,6 +14,18 @@ var weatherResult; // 습도, 기온 등
 var subwaymodule = require("./User_Module/SubwayModule.js");
 var trainup, traindown; //상행, 하행
 
+weathermodule.weather(function (result) {
+    weatherTem = result;
+});
+weathermodule.tem(function (result) {
+    weatherResult = result;
+});
+subwaymodule.traindown(function (resultdown) {
+    traindown = resultdown;
+});
+subwaymodule.trainup(function (resultup) {
+    trainup = resultup;
+});
 
 
 //url 모음
@@ -23,8 +35,7 @@ var ys_scholarship = 'http://www.yeonsung.ac.kr/ko/cms/FR_CON/index.do?MENU_ID=6
 var ys_mileage = 'http://www.yeonsung.ac.kr/ko/cms/FR_CON/index.do?MENU_ID=930';
 var kosaf = 'http://hope.kosaf.go.kr';
 var Univstudy = 'http://www.yeonsung.ac.kr/ko/cms/FR_CON/index.do?MENU_ID=1450';
-
-
+var Enrolment = 'http://yuis.yeonsung.ac.kr/ccrMain.jsp';
 
 
 //추가 시작
@@ -60,7 +71,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 //http://서버주소/keyboard
-var searchlist = ['날씨', '지하철', '장학금', '성적', '현장실습', '재수강', '대학교', '학식']
+var searchlist = ['장학금', '성적', '현장실습', '수강신청', '재수강', '날씨', '지하철', '대학교']
 app.get('/keyboard', function (req, res) {
 
     weathermodule.weather(function (result) {
@@ -376,6 +387,26 @@ app.post('/message', function (req, res) {
                 keyboard: {
                     'type': 'buttons',
                     'buttons': searchlist
+                }
+            }
+            break;
+
+        case '수강신청':
+            send = {
+                'message': {
+                    'text': '수강신청 시스템에서 매 학기 일정에 맞추어서 신청을 할 수 있습니다. \n2년제 80학점 이상(전공교과 56학점 이상, 교양학점 8학점 이상(직업기초능력 4학점 포함)), 3년제 120학점 이상(전공교과 74학점 이상, 교양교과 12학점 이상(직업기초능력 6학점 포함))입니다.'
+                },
+                "message_button": {
+                    "label": "연성대학교 수강신청 페이지",
+                    "url": Enrolment
+                }
+            }
+            break;
+
+        case '재수강':
+            send = {
+                'message': {
+                    'text': '이미 취득한 교과목의 학점이 C+ 이하인 경우 동일과목(대체과목)에 한하여 졸업 시 까지 24학점 범위 내에서 재수강 할 수 있습니다. \n재수강한 교과목의 최고등급은 A0로 하며, 기취득한 성적은 재수강이 확정됨과 동시에 취소되며 재수강 및 추가수강은 학과사무실 및 지도교수의 수강지도를 받아 학과에서 별도양식에 작성하여 신청합니다.'
                 }
             }
             break;

@@ -209,7 +209,7 @@ app.post('/message', function (req, res) {
         case 'gem마일리지':
             send = {
                 'message': {
-                    'text': ''
+                    'text': '#'
                 },
                 "message_button": {
                     "label": "커리어&Gem마일리지 안내표",
@@ -225,7 +225,7 @@ app.post('/message', function (req, res) {
         case '성적':
             send = {
                 'message': {
-                    'text': '성적 , 성적분포, 성적 정리표 \n 성적은 학점과 점수가 있으며 학점은 4.5만점, 점수는 100점 만점 입니다. 성적 분포는 A는 최대 30%를 교수님이 줄 수 있습니다. \n   점수     학점   등급 \n100~95     4.5     A+ \n94~90      4.0     A0 \n89~85      3.5     B+\n84~80      3.0     B0\n84~80      3.0     B0\n79~76      2.5     C+\n75~70      2.0     C0\n69~65      1.5     D+\n64~60      1.0     D0\n59~           -       F\n \n 순위는 따로 통합정보시스템에 없으며, 학과사무실에 전화를 해야만 알 수 있습니다.'
+                    'text': '성적 , 성적분포, 성적 정리표 \n 성적은 학점과 점수가 있으며 학점은 4.5만점, 점수는 100점 만점 입니다. 성적 분포는 A는 최대 30%를 교수님이 줄 수 있습니다. \n   점수     학점   등급 \n100~95     4.5     A+ \n94~90      4.0     A0 \n89~85      3.5     B+\n84~80      3.0     B0\n84~80      3.0     B0\n79~76      2.5     C+\n75~70      2.0     C0\n69~65      1.5     D+\n64~60      1.0     D0\n59~           -       F\n \n 성적순위는 통합정보시스템에 볼 수 없으며, 학과사무실에 연락을 통해서 알 수 있습니다.'
                 },
                 keyboard: {
                     'type': 'buttons',
@@ -272,7 +272,7 @@ app.post('/message', function (req, res) {
         case '현장실습':
             send = {
                 'message': {
-                    'text': '방학 현장실습, 학기제 현장실습이 있습니다. \n 현장실습을 하지 못할경우 졸업을 할 수 없습니다.'
+                    'text': '방학 현장실습, 학기제 현장실습이 있습니다. \n 현장실습을 하지 못할경우 졸업을 할 수 없습니다. \n 학교에서 지급되는 교통비는 '
                 },
                 keyboard: {
                     'type': 'buttons',
@@ -399,6 +399,10 @@ app.post('/message', function (req, res) {
                 "message_button": {
                     "label": "연성대학교 수강신청 페이지",
                     "url": Enrolment
+                },
+                keyboard: {
+                    'type': 'buttons',
+                    'buttons': searchlist
                 }
             }
             break;
@@ -407,6 +411,10 @@ app.post('/message', function (req, res) {
             send = {
                 'message': {
                     'text': '이미 취득한 교과목의 학점이 C+ 이하인 경우 동일과목(대체과목)에 한하여 졸업 시 까지 24학점 범위 내에서 재수강 할 수 있습니다. \n재수강한 교과목의 최고등급은 A0로 하며, 기취득한 성적은 재수강이 확정됨과 동시에 취소되며 재수강 및 추가수강은 학과사무실 및 지도교수의 수강지도를 받아 학과에서 별도양식에 작성하여 신청합니다.'
+                },
+                keyboard: {
+                    'type': 'buttons',
+                    'buttons': searchlist
                 }
             }
             break;
@@ -416,6 +424,10 @@ app.post('/message', function (req, res) {
             send = {
                 'message': {
                     'text': '채팅이 종료되었습니다. 도움이 필요하시면 도움말 메시지를 입력해 주세요.'
+                },
+                keyboard: {
+                    'type': 'buttons',
+                    'buttons': searchlist
                 }
             }
             break;

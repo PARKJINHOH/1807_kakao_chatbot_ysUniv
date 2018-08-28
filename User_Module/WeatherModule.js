@@ -47,11 +47,11 @@ module.exports.weather = function (callback) {
         url: url + queryParams,
         method: 'GET'
     }, function (error, response, body) {
-
-        var jsonbody = JSON.parse(body);
-        var items = jsonbody.response.body.items.item;
-
         try {
+            var jsonbody = JSON.parse(body);
+            var items = jsonbody.response.body.items.item;
+
+
             items.forEach(function (record) {
                 if (record.category === "T1H") {
                     var resultbody;
@@ -60,7 +60,7 @@ module.exports.weather = function (callback) {
                 }
             });
         } catch (exception) {
-            callback('죄송합니다. \n서버상에 문제가 생긴듯 합니다. 빠르게 대처하겠습니다.');
+            callback('죄송합니다. \n일일 트래픽 초과 및 서버상에 문제가 생긴듯 합니다. 빠르게 대처하겠습니다.');
         }
     });
 };
@@ -224,31 +224,32 @@ module.exports.tem = function (callback) {
         url: urlSpaceData + queryParamsForecast,
         method: 'GET'
     }, function (error, response, bodyForecast) {
-        var jsonbodyForecast = JSON.parse(bodyForecast);
-        var itemsForecast = jsonbodyForecast.response.body.items.item;
-
-        var dddd = today.getDate() + 1;
-        var mmmm = today.getMonth() + 1; //January is 0!
-        var yyyyyy = today.getFullYear();
-        var date2310; //2310분 이전 날짜
-        if (todaytimeForecast >= 0 && todaytimeForecast < 0210) {
-            if (mmm < 10) {
-                mmm = "0" + mmm;
-            }
-            if (ddd < 10) {
-                ddd = "0" + ddd;
-            }
-            date2310 = '' + yyyyy + mmm + ddd;
-        } else {
-            if (mmmm < 10) {
-                mmmm = "0" + mmmm;
-            }
-            if (dddd < 10) {
-                dddd = "0" + dddd;
-            }
-            date2310 = '' + yyyyyy + mmmm + dddd;
-        }
         try {
+            var jsonbodyForecast = JSON.parse(bodyForecast);
+            var itemsForecast = jsonbodyForecast.response.body.items.item;
+
+            var dddd = today.getDate() + 1;
+            var mmmm = today.getMonth() + 1; //January is 0!
+            var yyyyyy = today.getFullYear();
+            var date2310; //2310분 이전 날짜
+            if (todaytimeForecast >= 0 && todaytimeForecast < 0210) {
+                if (mmm < 10) {
+                    mmm = "0" + mmm;
+                }
+                if (ddd < 10) {
+                    ddd = "0" + ddd;
+                }
+                date2310 = '' + yyyyy + mmm + ddd;
+            } else {
+                if (mmmm < 10) {
+                    mmmm = "0" + mmmm;
+                }
+                if (dddd < 10) {
+                    dddd = "0" + dddd;
+                }
+                date2310 = '' + yyyyyy + mmmm + dddd;
+            }
+
             itemsForecast.forEach(function (record) {
                 //강수
                 if (record.category === "POP" && record.fcstDate == todaydateForecast && record.fcstTime == fcstTime) {
@@ -291,7 +292,7 @@ module.exports.tem = function (callback) {
                 outresult = '3시간/6시간 뒤\n▷ ' + resultT3H + '°C/' + resultT3H6 + '°C\n현재습도\n▷ ' + resultREH + '% \n강수확률\n▷ ' + resultPOP + '%\n구름상태\n▷ ' + resultSKY + '\n내일 최저/최고기온\n▷ ' + resultTMN + '°C/' + resultTMX + '°C\n서비스 제공자\n▷ 기상청';
             });
         } catch (exception) {
-            callback('죄송합니다. \n서버상에 문제가 생긴듯 합니다. 빠르게 대처하겠습니다.');
+            callback('죄송합니다. \n일일 트래픽 초과 및 서버상에 문제가 생긴듯 합니다. 빠르게 대처하겠습니다.');
         }
         callback(outresult)
 

@@ -5,7 +5,7 @@
 2. 연성대학교 위치의 날씨 정보 서비스.
 3. 연성대학교에서 가까운 안양역의 상행선, 하행선 서비스.
 
-※ ( AWS 서버를 사용하고 있으며, 무료 제공 용량이  서버가 종료될 수 있습니다.)<br>
+※ ( AWS 서버를 사용하고 있으며, AWS 무료 제공 용량을 초과하면 서버가 종료될 수 있습니다.)<br>
 
 
 ## 사용 방법
@@ -20,7 +20,7 @@
 1인 (박진호)
 
 ## 개발 환경
-Server : Amazon AWS(Seoul Server), Ubuntu Server 16.04 LTS (HVM) SSD Volume Type <br>
+Server : Amazon AWS(Seoul Server), Ubuntu Server 16.04 LTS (HVM) SSD Volume Type, pm2 <br>
 IDE : Putty , Brackets <br>
 Language : Node.js v8.11.4 , npm v5.6.0 <br>
 
@@ -37,6 +37,8 @@ Language : Node.js v8.11.4 , npm v5.6.0 <br>
 ### 문제점 
 1. 전철 서비스 서버의 불안정으로 조회 불안정. <br>
 2. aws의 무료 프론티어 <br>
+3. 날씨 데이터 트래픽 초과시 서버 중단 발생. <br>
+
 
 ### 일지
 2018.07.05 : 프로젝트 시작, 카카오플러스 연동 작업 <br>

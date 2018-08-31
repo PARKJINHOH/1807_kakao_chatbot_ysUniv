@@ -60,7 +60,7 @@ module.exports.weather = function (callback) {
                 }
             });
         } catch (exception) {
-            callback('죄송합니다. \n일일 트래픽 초과 및 서버상에 문제가 생긴듯 합니다. 빠르게 대처하겠습니다.');
+            callback('죄송합니다. \n일일 트래픽 초과 및 서버상에 문제가 생긴듯 합니다. 잠시후 다시 이용해 주세요.');
         }
     });
 };
@@ -195,9 +195,6 @@ module.exports.tem = function (callback) {
     if (mon3 < 10) {
         mon3 = "0" + mon3;
     }
-    if (date3 < 10) {
-        date3 = "0" + date3;
-    }
 
     var queryParamsForecast = '?' + encodeURIComponent('ServiceKey') + '=' + Key; /* Service Key*/
     queryParamsForecast += '&' + encodeURIComponent('ServiceKey') + '=' + encodeURIComponent(Key); /* 서비스 인증 */
@@ -282,17 +279,17 @@ module.exports.tem = function (callback) {
                     resultT3H6 = JSON.stringify(record.fcstValue);
                 }
                 //최저
-                if (record.fcstDate == date2310 && record.category === "TMN") {
+                if (record.category === "TMN") {
                     resultTMN = JSON.stringify(record.fcstValue);
                 }
                 //최고
-                if (record.fcstDate == date2310 && record.category === "TMX") {
+                if (record.category === "TMX") {
                     resultTMX = JSON.stringify(record.fcstValue);
                 }
                 outresult = '3시간/6시간 뒤\n▷ ' + resultT3H + '°C/' + resultT3H6 + '°C\n현재습도\n▷ ' + resultREH + '% \n강수확률\n▷ ' + resultPOP + '%\n구름상태\n▷ ' + resultSKY + '\n내일 최저/최고기온\n▷ ' + resultTMN + '°C/' + resultTMX + '°C\n서비스 제공자\n▷ 기상청';
             });
         } catch (exception) {
-            callback('죄송합니다. \n일일 트래픽 초과 및 서버상에 문제가 생긴듯 합니다. 빠르게 대처하겠습니다.');
+            callback('죄송합니다. \n일일 트래픽 초과 및 서버상에 문제가 생긴듯 합니다. 잠시후 다시 이용해 주세요.');
         }
         callback(outresult)
 

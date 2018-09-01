@@ -172,10 +172,10 @@ module.exports.tem = function (callback) {
         fcstTime6 = '0000';
         if (ddd === monArr[Number(mmm) - 1]) {
             mon3 = mon3 + 1;
-            date3 = '01';
+            date3 = '1';
             if (mmm == 12) {
                 year3 = year3 + 1;
-                mon3 = '01';
+                mon3 = '1';
             }
         }
     } else if (todaytimeForecast < 2310) {
@@ -185,15 +185,19 @@ module.exports.tem = function (callback) {
         fcstTime6 = '0300';
         if (ddd === monArr[Number(mmm) - 1]) {
             mon3 = mon3 + 1;
-            date3 = '01';
+            date3 = '1';
             if (mmm == 12) {
                 year3 = year3 + 1;
-                mon3 = '01';
+                mon3 = '1';
             }
         }
     }
     if (mon3 < 10) {
         mon3 = "0" + mon3;
+    }
+
+    if (date3 < 10) {
+        date3 = "0" + date3;
     }
 
     var queryParamsForecast = '?' + encodeURIComponent('ServiceKey') + '=' + Key; /* Service Key*/

@@ -45,6 +45,12 @@ Language : Node.js v8.11.4 , npm v5.6.0 <br>
 
 p.s aws의 무료 프론티어 -> 트래픽 초과 시 문제 발생(유료 변환) <br>
 
+1. 날씨관련 00시 00분 전 후 사이 에러 발생<br>
+![23](https://user-images.githubusercontent.com/24603994/47338003-3c1f6700-d6d1-11e8-98fb-770cd7fcfc04.PNG)
+
+2. 
+
+
 
 ### 일지
 2018.07.05 : 프로젝트 시작, 카카오플러스 연동 작업 <br>

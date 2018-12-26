@@ -1,6 +1,6 @@
-# kakao_chatbot_ysUniv
+# Project <kakao_chatbot_ysUniv>
 
-## 현재 프로젝트 상황 : 미완성 / 서비스 : 중단 / 서버 : AWS(Amazon Web Server) ##
+## Project : incomplete / Service : Stop / Server : AWS(Amazon Web Server) ##
 
 ## 기능 설명
 1. 연성대학교 정보제공(장학금, 현장학습 등)
